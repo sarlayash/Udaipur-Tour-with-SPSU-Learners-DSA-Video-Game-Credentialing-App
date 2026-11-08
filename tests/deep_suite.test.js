@@ -269,6 +269,17 @@ it('CSS contains signature royal Rajasthani color palette', () => {
   assert.ok(cssContent.includes('--panna-emerald'), 'Royal Turban Emerald defined');
 });
 
+// 8. Copyright Footers & Official Attribution Verification
+console.log('\n--- 8. COPYRIGHT FOOTERS & ATTRIBUTION ---');
+it('Page and all modals contain official SPSU copyright and Powered By Kapil attribution', () => {
+  assert.ok(htmlContent.includes('id="app-footer"'), 'Main app footer must exist');
+  assert.ok(htmlContent.includes('id="footer-copyright-text"'), 'Footer copyright element must exist');
+  assert.ok(htmlContent.includes('© 2026 Sir Padampat Singhania University (SPSU), Udaipur'), 'Official SPSU university copyright present');
+  assert.ok(htmlContent.includes('Powered By Kapil'), 'Powered By Kapil attribution present');
+  const modalFooters = htmlContent.match(/modal-footer-copyright/g);
+  assert.ok(modalFooters && modalFooters.length >= 4, 'All 4 modals must contain bottom copyright footers');
+});
+
 console.log('\n======================================================');
 console.log(`📊 TEST RESULTS: ${passed} PASSED | ${failed} FAILED`);
 console.log('======================================================\n');

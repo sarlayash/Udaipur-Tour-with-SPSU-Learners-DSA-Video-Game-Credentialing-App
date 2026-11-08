@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Udaipur Tour with SPSU Learners - DSA Video Game & Credentialing App | Powered By Kapil</title>
-  <meta name="description" content="FAANG-grade visual RPG video game & comprehensive Data Structures and Algorithms learning tour across Udaipur landmarks for SPSU learners. Earn XP, badges, and high-resolution certificates. Powered By Kapil." />
+  <meta name="description" content="FAANG-grade visual RPG video game & comprehensive Data Structures and Algorithms learning tour across Udaipur landmarks for SPSU learners. Soothing white and royal blue UI/UX. Powered By Kapil." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏰</text></svg>" />
   <!-- Google Fonts Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
   <!-- Confetti Celebration Canvas -->
   <canvas id="confetti-canvas"></canvas>
 
-  <!-- Navigation Bar / HUD -->
+  <!-- Navigation Bar / HUD (Soothing White, Light Blue & Dark Blue) -->
   <header class="app-navbar">
     <div class="nav-brand">
       <span class="brand-crest">🏰</span>
@@ -48,9 +48,9 @@
     </div>
 
     <div class="nav-actions">
-      <!-- Theme Toggle (Light / Dark) -->
+      <!-- Theme Toggle (Soothing Light White & Blue / Dark Navy) -->
       <button class="btn-nav btn-theme-toggle" id="btn-theme-toggle" title="Switch Theme (Light/Dark)" aria-label="Toggle Light/Dark Theme">
-        <span id="theme-icon">☀️</span> <span id="theme-label">Light Mode</span>
+        <span id="theme-icon">🌙</span> <span id="theme-label">Dark Mode</span>
       </button>
       <button class="btn-nav" id="btn-audio-toggle" title="Toggle Game Audio">🔊 Audio On</button>
       <button class="btn-nav" id="btn-open-badges" title="View Earned Badges">🎖️ Badges</button>
@@ -67,6 +67,31 @@
   </main>
 
   <!-- ==========================================================================
+       MAIN PAGE FOOTER & COPYRIGHT
+       ========================================================================== -->
+  <footer class="app-footer" id="app-footer">
+    <div class="footer-container">
+      <div class="footer-brand-row">
+        <span class="footer-crest">🏰</span>
+        <div>
+          <h4 class="footer-title">Sir Padampat Singhania University (SPSU), Udaipur</h4>
+          <p class="footer-subtitle">School of Computer Science &amp; Engineering • Royal Udaipur DSA Expedition</p>
+        </div>
+      </div>
+      <p class="footer-copyright" id="footer-copyright-text">
+        © 2026 Sir Padampat Singhania University (SPSU), Udaipur. All Rights Reserved. • Designed &amp; Powered By Kapil
+      </p>
+      <div class="footer-links">
+        <span>⚡ Verified Academic Credentialing</span>
+        <span>•</span>
+        <span>Udaipur Tour with SPSU Learners</span>
+        <span>•</span>
+        <span>High-Digital Resolution Certification</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
        MODAL 1: ONBOARDING SCREEN ("User can only enter name and begin journey")
        ========================================================================== -->
   <div class="modal-backdrop" id="onboarding-modal">
@@ -76,7 +101,7 @@
       <p class="onboarding-subtitle">Sir Padampat Singhania University (SPSU)</p>
       <div class="onboarding-powered">⚡ POWERED BY KAPIL • OFFICIAL CREDENTIALING ⚡</div>
       <p class="onboarding-desc">
-        Embark on an interactive visual video game journey across Udaipur landmarks. Master all core DSA concepts, simulate algorithms step-by-step, earn XP & royal badges, and unlock your official high-digital resolution SPSU Certificate!
+        Embark on an interactive visual video game journey across Udaipur landmarks. Master all core DSA concepts, simulate algorithms step-by-step, earn XP &amp; royal badges, and unlock your official high-digital resolution SPSU Certificate!
       </p>
 
       <form id="onboarding-form">
@@ -98,9 +123,9 @@
         </button>
       </form>
 
-      <p class="onboarding-footer-note">
-        Certified &amp; Powered By Kapil • Progress saved automatically on this device.
-      </p>
+      <div class="modal-footer-copyright">
+        © 2026 SPSU Udaipur • Certified &amp; Powered By Kapil. All Rights Reserved.
+      </div>
     </div>
   </div>
 
@@ -114,7 +139,7 @@
           <span class="modal-title-icon" id="zone-modal-icon">🏛️</span>
           <div>
             <h3 class="modal-heading" id="zone-modal-title">Zone 1: SPSU Campus</h3>
-            <p class="modal-subheading" id="zone-modal-subtitle">Contiguous Memory & Two-Pointer Logic</p>
+            <p class="modal-subheading" id="zone-modal-subtitle">Contiguous Memory &amp; Two-Pointer Logic</p>
           </div>
         </div>
         <button class="btn-close-modal" id="btn-close-zone-modal" aria-label="Close dialog">&times;</button>
@@ -191,6 +216,10 @@
           </div>
         </div>
       </div>
+
+      <div class="modal-footer-copyright">
+        © 2026 Sir Padampat Singhania University (SPSU), Udaipur • Certified &amp; Powered By Kapil. All Rights Reserved.
+      </div>
     </div>
   </div>
 
@@ -224,6 +253,10 @@
           </div>
         </div>
       </div>
+
+      <div class="modal-footer-copyright">
+        © 2026 Sir Padampat Singhania University (SPSU), Udaipur • Official Credential • Certified &amp; Powered By Kapil
+      </div>
     </div>
   </div>
 
@@ -246,6 +279,10 @@
       <div class="modal-body">
         <div class="badges-grid" id="badges-grid-container"></div>
       </div>
+
+      <div class="modal-footer-copyright">
+        © 2026 Sir Padampat Singhania University (SPSU), Udaipur • Badges &amp; Honors • Powered By Kapil
+      </div>
     </div>
   </div>
 
@@ -255,6 +292,7 @@
   <script type="module" src="js/data/zones.js"></script>
   <script type="module" src="js/visualizer.js"></script>
   <script type="module" src="js/certificate.js"></script>
+  <script type="module" src="js/badge_download.js"></script>
   <script type="module" src="js/game.js"></script>
 </body>
 </html>

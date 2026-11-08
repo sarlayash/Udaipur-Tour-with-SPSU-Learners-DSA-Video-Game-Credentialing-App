@@ -1,50 +1,58 @@
 /* ==========================================================================
    UDAIPUR TOUR WITH SPSU LEARNERS - DSA APP & VIDEO GAME
-   FAANG-Grade UI/UX • Video Game HUD • Light / Dark Theme Engine
-   Signature Royal Colors of Rajasthan • Powered By Kapil
+   Soothing UI/UX Theme: Pure White Background, Light Blue & Dark Blue Shades
+   Certified & Powered By Kapil • Official Copyright & Zero Spillovers
    ========================================================================== */
 
 :root {
-  /* Default: Royal Mewar Midnight & Kesariya Theme */
-  --bg-main: #070b14;
-  --bg-card: #0f172a;
-  --bg-card-hover: #1e293b;
-  --bg-card-subtle: #141e33;
-  --bg-overlay: rgba(7, 11, 20, 0.94);
-  --border-color: #27364f;
-  --border-glow: rgba(234, 88, 12, 0.4);
+  /* Default: Soothing White Background with Light Blue & Dark Blue Accents */
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f7ff;
+  --bg-card-subtle: #f1f5f9;
+  --bg-overlay: rgba(15, 23, 42, 0.65);
+  --border-color: #cbd5e1;
+  --border-light: #e2e8f0;
+  --border-glow: rgba(2, 132, 199, 0.25);
 
-  /* Signature Royal Colors of Rajasthan */
-  --mewar-kesariya: #ea580c;       /* Mewar Royal Saffron */
-  --kesariya-light: #f97316;       /* Radiant Saffron */
-  --kesariya-dark: #c2410c;        /* Deep Rajput Saffron */
-  --kundan-gold: #f59e0b;          /* Royal Kundan Gold */
-  --kundan-light: #fbbf24;         /* Gold Leaf */
-  --kundan-dark: #b45309;          /* Amber Gold */
-  --jodhpur-indigo: #312e81;       /* Jodhpur Royal Indigo */
-  --jodhpur-blue: #4338ca;         /* Blue City Azure */
-  --pichola-turquoise: #06b6d4;    /* Pichola Water Azure */
-  --pichola-deep: #0284c7;         /* Lake Deep Blue */
-  --jaipur-rose: #e11d48;          /* Jaipur Royal Gulaabi */
-  --panna-emerald: #059669;        /* Royal Turban Emerald */
-  --mewar-marble: #f8fafc;         /* Udaipur White Marble */
+  /* Soothing Shades of Blue */
+  --blue-darkest: #0f172a;       /* Deep Midnight Slate Navy */
+  --blue-royal-dark: #1e3a8a;    /* Regal Dark Royal Blue */
+  --blue-deep: #1d4ed8;          /* Vibrant Deep Blue */
+  --blue-cobalt: #2563eb;        /* Classic Cobalt Blue */
+  --blue-pichola: #0284c7;       /* Lake Pichola Deep Blue */
+  --blue-light-sky: #0ea5e9;     /* Soothing Sky Blue */
+  --blue-light-azure: #38bdf8;   /* Soft Light Azure */
+  --blue-light-ice: #7dd3fc;     /* Ice Blue */
+  --blue-soft-mist: #bae6fd;     /* Soft Mist Blue */
+  --blue-pale-bg: #e0f2fe;       /* Pale Powder Blue */
+  --blue-glacier-soft: #f0f9ff;  /* Glacier Tint */
 
-  --gold-primary: var(--kundan-gold);
-  --gold-light: var(--kundan-light);
-  --gold-dark: var(--kundan-dark);
-  --cyan-pichola: var(--pichola-turquoise);
-  --cyan-light: #38bdf8;
-  --emerald-green: var(--panna-emerald);
-  --ruby-red: var(--jaipur-rose);
+  /* Royal Highlights & Rajasthani Heritage Accents */
+  --mewar-kesariya: #ea580c;     /* Mewar Royal Saffron */
+  --kundan-gold: #d97706;        /* Kundan Saffron Gold */
+  --jodhpur-indigo: #1e3a8a;     /* Jodhpur Royal Indigo Blue */
+  --pichola-turquoise: #0284c7;  /* Lake Pichola Deep Turquoise */
+  --jaipur-rose: #e11d48;        /* Jaipur Royal Heritage Rose */
+  --panna-emerald: #059669;      /* Royal Turban Emerald */
 
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
-  --code-bg: #050811;
+  --gold-primary: #b45309;       /* Amber Sandstone Gold */
+  --gold-light: #d97706;
+  --gold-dark: #78350f;
+  --cyan-pichola: var(--blue-pichola);
+  --cyan-light: var(--blue-light-sky);
+  --emerald-green: #059669;
+  --ruby-red: #dc2626;
 
-  --hud-accent: var(--kesariya-light);
-  --hud-glow: 0 0 18px rgba(234, 88, 12, 0.35);
-  --card-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+  /* Typography */
+  --text-primary: #0f172a;       /* Crisp Deep Navy */
+  --text-secondary: #334155;     /* Slate Navy */
+  --text-muted: #64748b;         /* Soft Blue Slate */
+  --code-bg: #0f172a;            /* Clean Dark Blue Console */
+
+  --hud-accent: var(--blue-royal-dark);
+  --hud-glow: 0 0 16px rgba(2, 132, 199, 0.18);
+  --card-shadow: 0 8px 25px rgba(30, 58, 138, 0.06);
 
   --radius-sm: 8px;
   --radius-md: 14px;
@@ -56,47 +64,64 @@
   --transition-theme: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
-/* Light Theme: Royal Palace Ivory, Sandstone & Kesariya */
+/* Explicit Soothing Light Theme: Pure White, Light Blue & Deep Royal Navy */
 [data-theme="light"] {
   --bg-main: #f8fafc;
   --bg-card: #ffffff;
-  --bg-card-hover: #fff7ed;
+  --bg-card-hover: #f0f7ff;
   --bg-card-subtle: #f1f5f9;
-  --bg-overlay: rgba(248, 250, 252, 0.96);
-  --border-color: #fed7aa;
-  --border-glow: rgba(234, 88, 12, 0.25);
-
-  /* Signature Royal Colors of Rajasthan (Light Mode Contrast) */
-  --mewar-kesariya: #c2410c;
-  --kesariya-light: #ea580c;
-  --kesariya-dark: #9a3412;
-  --kundan-gold: #b45309;
-  --kundan-light: #d97706;
-  --kundan-dark: #78350f;
-  --jodhpur-indigo: #1e1b4b;
-  --jodhpur-blue: #312e81;
-  --pichola-turquoise: #0284c7;
-  --pichola-deep: #0369a1;
-  --jaipur-rose: #be123c;
-  --panna-emerald: #047857;
-  --mewar-marble: #ffffff;
-
-  --gold-primary: var(--kundan-gold);
-  --gold-light: var(--kundan-light);
-  --gold-dark: var(--kundan-dark);
-  --cyan-pichola: var(--pichola-turquoise);
-  --cyan-light: #0284c7;
-  --emerald-green: var(--panna-emerald);
-  --ruby-red: var(--jaipur-rose);
-
+  --bg-overlay: rgba(15, 23, 42, 0.65);
+  --border-color: #cbd5e1;
+  --border-light: #e2e8f0;
+  --border-glow: rgba(2, 132, 199, 0.25);
   --text-primary: #0f172a;
   --text-secondary: #334155;
   --text-muted: #64748b;
-  --code-bg: #1e293b;
+  --code-bg: #0f172a;
+  --hud-accent: #1e3a8a;
+  --hud-glow: 0 0 16px rgba(2, 132, 199, 0.18);
+  --card-shadow: 0 8px 25px rgba(30, 58, 138, 0.06);
+}
 
-  --hud-accent: var(--kesariya-light);
-  --hud-glow: 0 0 16px rgba(194, 65, 12, 0.2);
-  --card-shadow: 0 10px 30px rgba(180, 83, 9, 0.08);
+/* Optional Dark Theme: Deep Navy & Ice Blue */
+[data-theme="dark"] {
+  --bg-main: #090d16;
+  --bg-card: #0f172a;
+  --bg-card-hover: #1e293b;
+  --bg-card-subtle: #141e33;
+  --bg-overlay: rgba(9, 13, 22, 0.92);
+  --border-color: #27364f;
+  --border-light: #1e293b;
+  --border-glow: rgba(56, 189, 248, 0.35);
+
+  --blue-darkest: #090d16;
+  --blue-royal-dark: #38bdf8;
+  --blue-deep: #60a5fa;
+  --blue-cobalt: #3b82f6;
+  --blue-pichola: #06b6d4;
+  --blue-light-sky: #38bdf8;
+  --blue-light-azure: #7dd3fc;
+  --blue-light-ice: #bae6fd;
+  --blue-soft-mist: #1e293b;
+  --blue-pale-bg: #1e293b;
+  --blue-glacier-soft: #0f172a;
+
+  --gold-primary: #f59e0b;
+  --gold-light: #fbbf24;
+  --gold-dark: #b45309;
+  --cyan-pichola: #06b6d4;
+  --cyan-light: #38bdf8;
+  --emerald-green: #10b981;
+  --ruby-red: #ef4444;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --code-bg: #050811;
+
+  --hud-accent: #38bdf8;
+  --hud-glow: 0 0 18px rgba(56, 189, 248, 0.25);
+  --card-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
 }
 
 *, *::before, *::after {
@@ -118,7 +143,7 @@ html, body {
 }
 
 /* ==========================================================================
-   APP HEADER & VIDEO GAME HUD NAVBAR (Royal Rajasthani Trim)
+   APP HEADER & VIDEO GAME HUD NAVBAR (Soothing Blue & White)
    ========================================================================== */
 
 .app-navbar {
@@ -128,11 +153,11 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
+  padding: 14px 24px;
   background: var(--bg-card);
   backdrop-filter: blur(14px);
-  border-bottom: 3px solid var(--mewar-kesariya);
-  box-shadow: 0 4px 20px rgba(234, 88, 12, 0.15);
+  border-bottom: 2px solid var(--blue-pale-bg);
+  box-shadow: 0 4px 20px rgba(30, 58, 138, 0.05);
   gap: 16px;
   transition: var(--transition-theme);
 }
@@ -148,14 +173,14 @@ html, body {
 .brand-crest {
   font-size: 32px;
   line-height: 1;
-  filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.4));
+  filter: drop-shadow(0 2px 6px rgba(2, 132, 199, 0.2));
 }
 
 .brand-text h1 {
-  font-size: 16px;
+  font-size: 16.5px;
   font-weight: 900;
   letter-spacing: 0.5px;
-  color: var(--gold-primary);
+  color: var(--blue-royal-dark);
   text-transform: uppercase;
 }
 
@@ -168,18 +193,18 @@ html, body {
 }
 
 .brand-sub .brand-tag {
-  color: var(--cyan-pichola);
+  color: var(--blue-pichola);
 }
 
 .brand-sub .kapil-pill {
-  background: linear-gradient(135deg, var(--kesariya-dark), var(--mewar-kesariya));
+  background: linear-gradient(135deg, var(--blue-royal-dark), var(--blue-cobalt));
   color: #fff;
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 9.5px;
   font-weight: 800;
   letter-spacing: 0.5px;
-  box-shadow: 0 0 8px rgba(234, 88, 12, 0.4);
+  box-shadow: 0 2px 6px rgba(30, 58, 138, 0.25);
 }
 
 /* HUD Player Profile Strip */
@@ -204,9 +229,9 @@ html, body {
   align-items: center;
   justify-content: center;
   background: var(--bg-card);
-  border: 2px solid var(--mewar-kesariya);
+  border: 2px solid var(--blue-pichola);
   border-radius: 50%;
-  box-shadow: var(--hud-glow);
+  box-shadow: 0 0 12px rgba(2, 132, 199, 0.15);
 }
 
 .profile-info {
@@ -227,7 +252,7 @@ html, body {
 
 .player-level {
   font-size: 11px;
-  color: var(--cyan-pichola);
+  color: var(--blue-pichola);
   font-weight: 700;
 }
 
@@ -244,7 +269,7 @@ html, body {
   justify-content: space-between;
   font-size: 10px;
   font-weight: 800;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -252,20 +277,20 @@ html, body {
 .xp-track {
   width: 100%;
   height: 9px;
-  background: var(--bg-main);
+  background: var(--blue-pale-bg);
   border-radius: 5px;
   overflow: hidden;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--blue-soft-mist);
   position: relative;
 }
 
 .xp-fill {
   height: 100%;
   width: 5%;
-  background: linear-gradient(90deg, var(--kesariya-dark), var(--mewar-kesariya), var(--kundan-gold));
+  background: linear-gradient(90deg, var(--blue-pichola), var(--blue-cobalt), var(--blue-light-sky));
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 4px;
-  box-shadow: 0 0 10px rgba(234, 88, 12, 0.6);
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
 }
 
 /* Actions Bar */
@@ -293,35 +318,36 @@ html, body {
 
 .btn-nav:hover {
   background: var(--bg-card-hover);
-  border-color: var(--mewar-kesariya);
+  border-color: var(--blue-pichola);
   transform: translateY(-1px);
 }
 
 .btn-theme-toggle {
-  background: var(--bg-card-subtle);
-  border-color: var(--border-color);
+  background: var(--blue-glacier-soft);
+  border-color: var(--blue-soft-mist);
+  color: var(--blue-royal-dark);
 }
 
 .btn-cert-nav {
-  background: linear-gradient(135deg, var(--kesariya-dark), var(--mewar-kesariya));
-  border-color: var(--gold-primary);
+  background: linear-gradient(135deg, var(--blue-royal-dark), var(--blue-cobalt));
+  border-color: var(--blue-cobalt);
   color: #fff;
-  box-shadow: 0 0 14px rgba(234, 88, 12, 0.35);
+  box-shadow: 0 2px 10px rgba(30, 58, 138, 0.2);
 }
 
 .btn-cert-nav:hover {
-  background: linear-gradient(135deg, var(--mewar-kesariya), var(--kesariya-light));
-  box-shadow: 0 0 18px rgba(234, 88, 12, 0.5);
+  background: linear-gradient(135deg, var(--blue-deep), var(--blue-light-sky));
+  box-shadow: 0 4px 14px rgba(30, 58, 138, 0.35);
 }
 
 /* ==========================================================================
-   MAIN GAME VIEW & OVERWORLD EXPEDITION
+   MAIN GAME VIEW & OVERWORLD EXPEDITION (White, Light Blue & Dark Blue)
    ========================================================================== */
 
 .main-container {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 24px 20px 60px;
+  padding: 24px 20px 40px;
 }
 
 .udaipur-expedition-wrapper {
@@ -333,14 +359,14 @@ html, body {
 /* Expedition Telemetry HUD Card */
 .expedition-hud-card {
   background: var(--bg-card);
-  border: 2px solid var(--border-color);
+  border: 2px solid var(--blue-pale-bg);
   border-radius: var(--radius-lg);
-  padding: 20px 24px;
+  padding: 22px 26px;
   box-shadow: var(--card-shadow);
   display: flex;
   flex-direction: column;
   gap: 16px;
-  border-top: 4px solid var(--mewar-kesariya);
+  border-top: 4px solid var(--blue-royal-dark);
 }
 
 .hud-route-header {
@@ -360,7 +386,7 @@ html, body {
 
 .waypoint-box {
   background: var(--bg-card-subtle);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--blue-soft-mist);
   padding: 10px 16px;
   border-radius: var(--radius-sm);
   display: flex;
@@ -368,11 +394,11 @@ html, body {
 }
 
 .source-waypoint {
-  border-left: 4px solid var(--cyan-pichola);
+  border-left: 4px solid var(--blue-pichola);
 }
 
 .dest-waypoint {
-  border-right: 4px solid var(--mewar-kesariya);
+  border-right: 4px solid var(--blue-royal-dark);
 }
 
 .waypoint-tag {
@@ -391,7 +417,7 @@ html, body {
 
 .waypoint-concept {
   font-size: 11px;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
   font-weight: 700;
 }
 
@@ -400,18 +426,18 @@ html, body {
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: var(--cyan-light);
+  color: var(--blue-pichola);
   font-weight: 800;
 }
 
 .journey-distance {
   font-size: 11px;
   font-weight: 800;
-  background: rgba(234, 88, 12, 0.15);
-  color: var(--mewar-kesariya);
+  background: var(--blue-pale-bg);
+  color: var(--blue-royal-dark);
   padding: 4px 10px;
   border-radius: 12px;
-  border: 1px solid rgba(234, 88, 12, 0.4);
+  border: 1px solid var(--blue-soft-mist);
   letter-spacing: 0.5px;
 }
 
@@ -425,7 +451,7 @@ html, body {
 .view-toggle-pills {
   display: flex;
   background: var(--bg-card-subtle);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--blue-soft-mist);
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
@@ -442,12 +468,12 @@ html, body {
 }
 
 .btn-view-toggle.active {
-  background: var(--mewar-kesariya);
+  background: var(--blue-royal-dark);
   color: #fff;
 }
 
 .btn-travel-now {
-  background: linear-gradient(135deg, var(--kesariya-dark), var(--mewar-kesariya));
+  background: linear-gradient(135deg, var(--blue-royal-dark), var(--blue-cobalt));
   color: #fff;
   border: none;
   padding: 10px 18px;
@@ -456,13 +482,13 @@ html, body {
   font-weight: 800;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
+  box-shadow: 0 4px 14px rgba(30, 58, 138, 0.2);
 }
 
 .btn-travel-now:hover {
-  background: linear-gradient(135deg, var(--mewar-kesariya), var(--kesariya-light));
+  background: linear-gradient(135deg, var(--blue-deep), var(--blue-light-sky));
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.5);
+  box-shadow: 0 6px 18px rgba(30, 58, 138, 0.35);
 }
 
 /* Progress strip */
@@ -480,30 +506,30 @@ html, body {
 }
 
 .progress-labels strong {
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
 }
 
 .expedition-track {
   width: 100%;
   height: 10px;
-  background: var(--bg-main);
-  border: 1px solid var(--border-color);
+  background: var(--blue-glacier-soft);
+  border: 1px solid var(--blue-soft-mist);
   border-radius: 5px;
   overflow: hidden;
 }
 
 .expedition-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--cyan-pichola), var(--mewar-kesariya), var(--kundan-gold));
+  background: linear-gradient(90deg, var(--blue-pichola), var(--blue-cobalt), var(--blue-royal-dark));
   border-radius: 5px;
   transition: width 0.5s ease;
-  box-shadow: 0 0 12px rgba(234, 88, 12, 0.5);
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.3);
 }
 
 /* Interactive Map Frame */
 .udaipur-interactive-map-frame {
   background: var(--bg-card);
-  border: 2px solid var(--border-color);
+  border: 2px solid var(--blue-pale-bg);
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--card-shadow);
@@ -515,7 +541,7 @@ html, body {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 10px 20px;
+  padding: 12px 20px;
   background: var(--bg-card-subtle);
   border-bottom: 1px solid var(--border-color);
   font-size: 11.5px;
@@ -536,23 +562,23 @@ html, body {
   border-radius: 50%;
 }
 
-.dot-source { background: #3b82f6; }
-.dot-conquered { background: #f59e0b; }
-.dot-current { background: #ea580c; box-shadow: 0 0 8px #ea580c; }
-.dot-locked { background: #475569; }
-.dot-dest { background: #b45309; }
+.dot-source { background: #0284c7; }
+.dot-conquered { background: #10b981; }
+.dot-current { background: #1e3a8a; box-shadow: 0 0 8px #1e3a8a; }
+.dot-locked { background: #94a3b8; }
+.dot-dest { background: #1e3a8a; }
 
 .map-hint {
   margin-left: auto;
   font-size: 11px;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
   font-weight: 700;
 }
 
 .svg-map-wrapper {
   width: 100%;
   position: relative;
-  background: var(--bg-main);
+  background: var(--bg-card);
 }
 
 .udaipur-vector-map {
@@ -582,7 +608,7 @@ html, body {
 
 .pin-disc {
   transition: all 0.2s ease;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 2px 6px rgba(15, 23, 42, 0.2));
 }
 
 .map-landmark-group:hover .pin-disc {
@@ -604,7 +630,7 @@ html, body {
 
 .learner-traveler-avatar {
   pointer-events: none;
-  filter: drop-shadow(0 4px 12px rgba(234, 88, 12, 0.6));
+  filter: drop-shadow(0 4px 12px rgba(30, 58, 138, 0.4));
 }
 
 /* Grid View Fallback */
@@ -631,8 +657,8 @@ html, body {
 
 .map-node-card:hover {
   transform: translateY(-5px);
-  border-color: var(--mewar-kesariya);
-  box-shadow: 0 12px 28px rgba(234, 88, 12, 0.25);
+  border-color: var(--blue-pichola);
+  box-shadow: 0 12px 28px rgba(2, 132, 199, 0.15);
 }
 
 .node-card-header {
@@ -645,7 +671,7 @@ html, body {
 .node-number {
   font-size: 11px;
   font-weight: 800;
-  color: var(--cyan-pichola);
+  color: var(--blue-pichola);
   text-transform: uppercase;
   letter-spacing: 1.5px;
 }
@@ -664,15 +690,15 @@ html, body {
 }
 
 .node-status-tag.node-active {
-  background: rgba(234, 88, 12, 0.18);
-  color: var(--kesariya-light);
-  border: 1px solid rgba(234, 88, 12, 0.4);
+  background: var(--blue-pale-bg);
+  color: var(--blue-royal-dark);
+  border: 1px solid var(--blue-soft-mist);
 }
 
 .node-status-tag.node-conquered {
-  background: rgba(245, 158, 11, 0.2);
-  color: var(--kundan-light);
-  border: 1px solid rgba(245, 158, 11, 0.5);
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--emerald-green);
+  border: 1px solid rgba(16, 185, 129, 0.35);
 }
 
 .node-icon-row {
@@ -695,7 +721,7 @@ html, body {
 
 .node-concept {
   font-size: 12px;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
   font-weight: 700;
   margin-top: 2px;
 }
@@ -712,13 +738,13 @@ html, body {
   align-items: center;
   margin-top: auto;
   padding-top: 14px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-light);
 }
 
 .node-xp {
   font-size: 13.5px;
   font-weight: 900;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
 }
 
 .btn-node-action {
@@ -732,14 +758,14 @@ html, body {
 }
 
 .btn-active-zone {
-  background: linear-gradient(135deg, var(--kesariya-dark), var(--mewar-kesariya));
+  background: linear-gradient(135deg, var(--blue-royal-dark), var(--blue-cobalt));
   color: #fff;
   font-weight: 800;
-  box-shadow: 0 0 12px rgba(234, 88, 12, 0.4);
+  box-shadow: 0 2px 10px rgba(30, 58, 138, 0.25);
 }
 
 .btn-active-zone:hover {
-  background: linear-gradient(135deg, var(--mewar-kesariya), var(--kesariya-light));
+  background: linear-gradient(135deg, var(--blue-deep), var(--blue-light-sky));
   transform: scale(1.03);
 }
 
@@ -754,12 +780,12 @@ html, body {
 }
 
 .map-node-card.node-conquered {
-  border-color: var(--gold-primary);
+  border-color: var(--emerald-green);
 }
 
 .map-node-card.current-pulse {
-  border-color: var(--mewar-kesariya);
-  box-shadow: 0 0 24px rgba(234, 88, 12, 0.4);
+  border-color: var(--blue-royal-dark);
+  box-shadow: 0 0 24px rgba(30, 58, 138, 0.2);
 }
 
 /* ==========================================================================
@@ -793,7 +819,7 @@ html, body {
   background: var(--bg-card);
   border: 2px solid var(--border-color);
   border-radius: var(--radius-lg);
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.25);
   width: 100%;
   max-width: 920px;
   max-height: 90vh;
@@ -819,8 +845,8 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid var(--border-color);
-  background: var(--bg-card-subtle);
+  border-bottom: 2px solid var(--border-light);
+  background: var(--blue-glacier-soft);
 }
 
 .modal-title-row {
@@ -841,7 +867,7 @@ html, body {
 
 .modal-subheading {
   font-size: 12px;
-  color: var(--cyan-pichola);
+  color: var(--blue-pichola);
   font-weight: 600;
 }
 
@@ -859,7 +885,7 @@ html, body {
 
 .btn-close-modal:hover {
   color: var(--ruby-red);
-  background: rgba(225, 29, 72, 0.1);
+  background: rgba(220, 38, 38, 0.1);
 }
 
 .modal-body {
@@ -868,18 +894,29 @@ html, body {
   flex: 1;
 }
 
+.modal-footer-copyright {
+  padding: 10px 24px;
+  background: var(--blue-glacier-soft);
+  border-top: 1px solid var(--border-light);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: center;
+}
+
 /* ==========================================================================
    ONBOARDING SCREEN ("USER CAN ONLY ENTER NAME AND BEGIN JOURNEY")
    ========================================================================== */
 
 .onboarding-card {
   max-width: 480px;
-  padding: 38px 32px;
+  padding: 38px 32px 24px;
   text-align: center;
   background: var(--bg-card);
-  border: 2px solid var(--mewar-kesariya);
+  border: 2px solid var(--blue-pale-bg);
+  border-top: 5px solid var(--blue-royal-dark);
   border-radius: var(--radius-xl);
-  box-shadow: 0 0 45px rgba(234, 88, 12, 0.3);
+  box-shadow: 0 16px 40px rgba(30, 58, 138, 0.12);
 }
 
 .onboarding-crest {
@@ -896,21 +933,21 @@ html, body {
 .onboarding-title {
   font-size: 25px;
   font-weight: 900;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .onboarding-subtitle {
   font-size: 13.5px;
-  color: var(--cyan-pichola);
+  color: var(--blue-pichola);
   font-weight: 700;
   margin-bottom: 6px;
 }
 
 .onboarding-powered {
   font-size: 11px;
-  color: var(--kundan-gold);
+  color: var(--blue-cobalt);
   font-weight: 800;
   letter-spacing: 1px;
   margin-bottom: 16px;
@@ -940,7 +977,7 @@ html, body {
 .input-learner-name {
   width: 100%;
   padding: 14px 18px;
-  background: var(--bg-main);
+  background: var(--bg-card);
   border: 2px solid var(--border-color);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
@@ -951,8 +988,8 @@ html, body {
 }
 
 .input-learner-name:focus {
-  border-color: var(--mewar-kesariya);
-  box-shadow: 0 0 14px rgba(234, 88, 12, 0.4);
+  border-color: var(--blue-royal-dark);
+  box-shadow: 0 0 14px rgba(30, 58, 138, 0.2);
 }
 
 .input-shake {
@@ -969,7 +1006,7 @@ html, body {
 .btn-embark {
   width: 100%;
   padding: 15px 22px;
-  background: linear-gradient(135deg, var(--kesariya-dark), var(--mewar-kesariya));
+  background: linear-gradient(135deg, var(--blue-royal-dark), var(--blue-cobalt));
   color: #fff;
   border: none;
   border-radius: var(--radius-sm);
@@ -978,19 +1015,13 @@ html, body {
   letter-spacing: 0.5px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 18px rgba(234, 88, 12, 0.4);
+  box-shadow: 0 4px 18px rgba(30, 58, 138, 0.25);
 }
 
 .btn-embark:hover {
-  background: linear-gradient(135deg, var(--mewar-kesariya), var(--kesariya-light));
+  background: linear-gradient(135deg, var(--blue-deep), var(--blue-light-sky));
   transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(234, 88, 12, 0.6);
-}
-
-.onboarding-footer-note {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-top: 18px;
+  box-shadow: 0 6px 22px rgba(30, 58, 138, 0.4);
 }
 
 /* ==========================================================================
@@ -1000,7 +1031,7 @@ html, body {
 .zone-tabs-nav {
   display: flex;
   background: var(--bg-card-subtle);
-  border-bottom: 2px solid var(--border-color);
+  border-bottom: 2px solid var(--border-light);
   padding: 0 24px;
   gap: 12px;
 }
@@ -1025,8 +1056,8 @@ html, body {
 }
 
 .zone-tab-btn.active {
-  color: var(--mewar-kesariya);
-  border-bottom-color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
+  border-bottom-color: var(--blue-royal-dark);
 }
 
 .zone-tab-pane {
@@ -1045,8 +1076,8 @@ html, body {
 }
 
 .lore-box {
-  background: rgba(6, 182, 212, 0.1);
-  border-left: 4px solid var(--cyan-pichola);
+  background: var(--blue-glacier-soft);
+  border-left: 4px solid var(--blue-pichola);
   padding: 14px 18px;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
@@ -1054,7 +1085,7 @@ html, body {
 .lore-title {
   font-size: 12px;
   font-weight: 800;
-  color: var(--cyan-pichola);
+  color: var(--blue-pichola);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 4px;
@@ -1069,7 +1100,7 @@ html, body {
 .concept-title {
   font-size: 18px;
   font-weight: 800;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
   margin-bottom: 8px;
 }
 
@@ -1110,7 +1141,7 @@ html, body {
 
 .complexity-chip {
   background: var(--bg-card-subtle);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-light);
   padding: 8px 12px;
   border-radius: var(--radius-sm);
   display: flex;
@@ -1124,7 +1155,7 @@ html, body {
 }
 
 .comp-val {
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
   font-weight: 800;
   font-family: var(--font-mono);
 }
@@ -1133,8 +1164,8 @@ html, body {
   display: flex;
   align-items: center;
   gap: 14px;
-  background: rgba(234, 88, 12, 0.08);
-  border: 1px solid rgba(234, 88, 12, 0.35);
+  background: var(--blue-glacier-soft);
+  border: 1px solid var(--blue-soft-mist);
   padding: 12px 18px;
   border-radius: var(--radius-sm);
 }
@@ -1146,7 +1177,7 @@ html, body {
 .badge-preview-name {
   font-size: 13.5px;
   font-weight: 800;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
 }
 
 .badge-preview-desc {
@@ -1158,7 +1189,7 @@ html, body {
   margin-left: auto;
   font-size: 13.5px;
   font-weight: 900;
-  color: var(--kundan-gold);
+  color: var(--blue-cobalt);
   white-space: nowrap;
 }
 
@@ -1176,7 +1207,7 @@ html, body {
   background: var(--bg-card-subtle);
   padding: 10px 16px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-light);
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -1201,17 +1232,17 @@ html, body {
 
 .btn-vis-ctrl:hover {
   background: var(--bg-card-hover);
-  border-color: var(--mewar-kesariya);
+  border-color: var(--blue-pichola);
 }
 
 .btn-vis-ctrl.btn-vis-play {
-  background: linear-gradient(135deg, var(--kesariya-dark), var(--mewar-kesariya));
-  border-color: var(--mewar-kesariya);
+  background: linear-gradient(135deg, var(--blue-royal-dark), var(--blue-cobalt));
+  border-color: var(--blue-cobalt);
   color: #fff;
 }
 
 .btn-vis-ctrl.btn-vis-play:hover {
-  background: linear-gradient(135deg, var(--mewar-kesariya), var(--kesariya-light));
+  background: linear-gradient(135deg, var(--blue-deep), var(--blue-light-sky));
 }
 
 .vis-speed-select {
@@ -1227,14 +1258,14 @@ html, body {
 
 .vis-step-status {
   font-size: 12px;
-  color: var(--cyan-pichola);
+  color: var(--blue-royal-dark);
   font-weight: 800;
 }
 
 .vis-stage-box {
   min-height: 260px;
-  background: var(--bg-main);
-  border: 2px solid var(--border-color);
+  background: var(--bg-card-hover);
+  border: 2px solid var(--blue-pale-bg);
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
@@ -1244,8 +1275,8 @@ html, body {
 }
 
 .vis-commentary-box {
-  background: var(--bg-card-subtle);
-  border-left: 4px solid var(--mewar-kesariya);
+  background: var(--blue-glacier-soft);
+  border-left: 4px solid var(--blue-royal-dark);
   padding: 12px 18px;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   font-size: 13.5px;
@@ -1272,8 +1303,8 @@ html, body {
 .challenge-badge-tag {
   font-size: 11px;
   font-weight: 800;
-  color: var(--cyan-pichola);
-  background: rgba(6, 182, 212, 0.15);
+  color: var(--blue-pichola);
+  background: var(--blue-pale-bg);
   padding: 4px 10px;
   border-radius: 4px;
 }
@@ -1281,7 +1312,7 @@ html, body {
 .challenge-reward-tag {
   font-size: 12.5px;
   font-weight: 900;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
 }
 
 .challenge-text {
@@ -1297,7 +1328,7 @@ html, body {
 }
 
 .challenge-option-btn {
-  background: var(--bg-card-subtle);
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
   padding: 14px 18px;
   border-radius: var(--radius-sm);
@@ -1312,8 +1343,8 @@ html, body {
 }
 
 .challenge-option-btn:hover:not(:disabled) {
-  border-color: var(--mewar-kesariya);
-  background: var(--bg-card-hover);
+  border-color: var(--blue-pichola);
+  background: var(--blue-glacier-soft);
   transform: translateX(4px);
 }
 
@@ -1324,16 +1355,16 @@ html, body {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: var(--bg-card);
-  color: var(--mewar-kesariya);
+  background: var(--blue-pale-bg);
+  color: var(--blue-royal-dark);
   font-weight: 800;
   font-size: 12px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--blue-soft-mist);
 }
 
 .challenge-option-btn.option-correct {
   border-color: var(--emerald-green);
-  background: rgba(5, 150, 105, 0.15);
+  background: rgba(5, 150, 105, 0.1);
 }
 
 .challenge-option-btn.option-correct .opt-letter {
@@ -1344,7 +1375,7 @@ html, body {
 
 .challenge-option-btn.option-incorrect {
   border-color: var(--ruby-red);
-  background: rgba(225, 29, 72, 0.15);
+  background: rgba(220, 38, 38, 0.1);
 }
 
 .challenge-option-btn.option-incorrect .opt-letter {
@@ -1361,7 +1392,7 @@ html, body {
 }
 
 .feedback-success {
-  background: rgba(5, 150, 105, 0.12);
+  background: rgba(5, 150, 105, 0.1);
   border: 1px solid var(--emerald-green);
   color: #065f46;
 }
@@ -1381,7 +1412,7 @@ html, body {
   padding-top: 10px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   font-weight: 700;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
 }
 
 [data-theme="dark"] .reward-toast {
@@ -1389,9 +1420,9 @@ html, body {
 }
 
 .feedback-error {
-  background: rgba(225, 29, 72, 0.12);
+  background: rgba(220, 38, 38, 0.1);
   border: 1px solid var(--ruby-red);
-  color: #9f1239;
+  color: #991b1b;
 }
 
 [data-theme="dark"] .feedback-error {
@@ -1447,9 +1478,9 @@ html, body {
 }
 
 .code-lang-btn.active {
-  background: var(--mewar-kesariya);
+  background: var(--blue-royal-dark);
   color: #fff;
-  border-color: var(--kesariya-light);
+  border-color: var(--blue-cobalt);
   font-weight: 800;
 }
 
@@ -1504,7 +1535,7 @@ html, body {
 }
 
 .text-gold {
-  color: var(--mewar-kesariya) !important;
+  color: var(--blue-royal-dark) !important;
 }
 
 .array-strip {
@@ -1543,26 +1574,26 @@ html, body {
 }
 
 .left-ptr-cell .cell-val {
-  border-color: var(--cyan-pichola);
-  background: rgba(6, 182, 212, 0.2);
+  border-color: var(--blue-pichola);
+  background: var(--blue-pale-bg);
 }
 
 .right-ptr-cell .cell-val {
-  border-color: var(--jaipur-rose);
-  background: rgba(225, 29, 72, 0.2);
+  border-color: var(--blue-royal-dark);
+  background: rgba(30, 58, 138, 0.12);
 }
 
 .match-cell .cell-val {
-  border-color: var(--mewar-kesariya);
-  background: rgba(234, 88, 12, 0.35);
-  box-shadow: 0 0 16px rgba(234, 88, 12, 0.5);
+  border-color: var(--emerald-green);
+  background: rgba(5, 150, 105, 0.15);
+  box-shadow: 0 0 16px rgba(5, 150, 105, 0.4);
   transform: scale(1.08);
 }
 
 .cell-label {
   font-size: 10px;
   font-weight: 800;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
   height: 14px;
   margin-top: 4px;
 }
@@ -1606,27 +1637,27 @@ html, body {
 
 .ll-next-dot {
   padding: 8px 8px;
-  background: var(--bg-card-subtle);
-  color: var(--cyan-pichola);
+  background: var(--blue-pale-bg);
+  color: var(--blue-royal-dark);
 }
 
 .ll-curr {
-  border-color: var(--mewar-kesariya);
-  background: rgba(234, 88, 12, 0.18);
+  border-color: var(--blue-royal-dark);
+  background: var(--blue-glacier-soft);
 }
 
 .ll-prev {
-  border-color: var(--cyan-pichola);
+  border-color: var(--blue-pichola);
 }
 
 .ll-next {
-  border-color: var(--jodhpur-blue);
+  border-color: var(--blue-light-sky);
 }
 
 .ll-sub-label {
   font-size: 10px;
   font-weight: 800;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
   height: 14px;
   margin-top: 4px;
 }
@@ -1638,7 +1669,7 @@ html, body {
 }
 
 .arrow-reversed {
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
 }
 
 .null-badge {
@@ -1661,7 +1692,7 @@ html, body {
   min-height: 200px;
   border-left: 3px solid var(--border-color);
   border-right: 3px solid var(--border-color);
-  border-bottom: 3px solid var(--mewar-kesariya);
+  border-bottom: 3px solid var(--blue-royal-dark);
   padding: 6px;
   display: flex;
   flex-direction: column;
@@ -1685,7 +1716,7 @@ html, body {
 
 .stack-plate {
   background: var(--bg-card);
-  border: 1px solid var(--cyan-pichola);
+  border: 1px solid var(--blue-pichola);
   padding: 6px 10px;
   border-radius: 4px;
   margin-top: 4px;
@@ -1695,13 +1726,13 @@ html, body {
 }
 
 .stack-top {
-  border-color: var(--mewar-kesariya);
-  background: rgba(234, 88, 12, 0.2);
+  border-color: var(--blue-royal-dark);
+  background: var(--blue-pale-bg);
 }
 
 .top-tag {
   font-size: 8px;
-  background: var(--mewar-kesariya);
+  background: var(--blue-royal-dark);
   color: #fff;
   padding: 1px 4px;
   border-radius: 2px;
@@ -1712,7 +1743,7 @@ html, body {
 .chess-board-4x4 {
   display: flex;
   flex-direction: column;
-  border: 2px solid var(--mewar-kesariya);
+  border: 2px solid var(--blue-royal-dark);
   border-radius: 4px;
   overflow: hidden;
 }
@@ -1735,11 +1766,11 @@ html, body {
 }
 
 .cell-dark {
-  background: #334155;
+  background: #cbd5e1;
 }
 
 .cell-queen {
-  background: rgba(234, 88, 12, 0.45) !important;
+  background: rgba(30, 58, 138, 0.25) !important;
 }
 
 /* Sorting Visualizer */
@@ -1761,7 +1792,7 @@ html, body {
 
 .sort-bar {
   width: 32px;
-  background: var(--cyan-pichola);
+  background: var(--blue-cobalt);
   border-radius: 4px 4px 0 0;
   display: flex;
   align-items: flex-end;
@@ -1783,7 +1814,7 @@ html, body {
 }
 
 .bar-active {
-  background: var(--jaipur-rose) !important;
+  background: var(--ruby-red) !important;
 }
 
 .bar-sorted {
@@ -1802,12 +1833,12 @@ html, body {
 }
 
 .inorder-box {
-  background: var(--bg-card-subtle);
-  border: 1px solid var(--border-color);
+  background: var(--blue-glacier-soft);
+  border: 1px solid var(--blue-soft-mist);
   padding: 8px 16px;
   border-radius: var(--radius-sm);
   font-size: 12.5px;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
   font-weight: 700;
 }
 
@@ -1831,22 +1862,22 @@ html, body {
 }
 
 .dp-grid th, .dp-grid td {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-light);
   padding: 6px 10px;
   text-align: center;
 }
 
 .dp-grid th {
-  background: var(--bg-card-subtle);
-  color: var(--cyan-pichola);
+  background: var(--blue-glacier-soft);
+  color: var(--blue-royal-dark);
 }
 
 .row-filled {
-  background: rgba(6, 182, 212, 0.08);
+  background: var(--blue-pale-bg);
 }
 
 .dp-target-cell {
-  background: var(--mewar-kesariya) !important;
+  background: var(--blue-royal-dark) !important;
   color: #fff !important;
   font-weight: 900;
 }
@@ -1863,14 +1894,14 @@ html, body {
   width: 100%;
   aspect-ratio: 1200 / 800;
   max-height: 64vh;
-  background: #070b14;
-  border: 3px solid var(--kundan-gold);
+  background: #0f172a;
+  border: 3px solid var(--blue-royal-dark);
   border-radius: var(--radius-md);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   contain: layout paint;
 }
 
@@ -1895,7 +1926,7 @@ html, body {
 }
 
 .cert-meta-info strong {
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
 }
 
 .cert-btn-group {
@@ -1904,7 +1935,7 @@ html, body {
 }
 
 .btn-cert-download {
-  background: linear-gradient(135deg, var(--kesariya-dark), var(--mewar-kesariya));
+  background: linear-gradient(135deg, var(--blue-royal-dark), var(--blue-cobalt));
   color: #fff;
   border: none;
   font-weight: 900;
@@ -1916,13 +1947,13 @@ html, body {
   align-items: center;
   gap: 6px;
   transition: all 0.2s;
-  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4);
+  box-shadow: 0 4px 14px rgba(30, 58, 138, 0.25);
 }
 
 .btn-cert-download:hover {
-  background: linear-gradient(135deg, var(--mewar-kesariya), var(--kesariya-light));
+  background: linear-gradient(135deg, var(--blue-deep), var(--blue-light-sky));
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.6);
+  box-shadow: 0 6px 18px rgba(30, 58, 138, 0.4);
 }
 
 .btn-cert-print {
@@ -1938,11 +1969,11 @@ html, body {
 
 .btn-cert-print:hover {
   background: var(--bg-card-hover);
-  border-color: var(--mewar-kesariya);
+  border-color: var(--blue-royal-dark);
 }
 
 /* ==========================================================================
-   BADGES MODAL & DOWNLOAD BADGE BUTTONS (Royal Rajasthani Kundan Framing)
+   BADGES MODAL & DOWNLOAD BADGE BUTTONS
    ========================================================================== */
 
 .badges-header-actions {
@@ -1951,7 +1982,7 @@ html, body {
   align-items: center;
   margin-bottom: 18px;
   padding-bottom: 14px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-light);
   flex-wrap: wrap;
   gap: 12px;
 }
@@ -1959,11 +1990,11 @@ html, body {
 .badges-count-status {
   font-size: 13px;
   font-weight: 800;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
 }
 
 .btn-download-all-badges {
-  background: linear-gradient(135deg, var(--kesariya-dark), var(--mewar-kesariya));
+  background: linear-gradient(135deg, var(--blue-royal-dark), var(--blue-cobalt));
   color: #fff;
   border: none;
   padding: 8px 16px;
@@ -1972,11 +2003,11 @@ html, body {
   font-weight: 800;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 2px 10px rgba(234, 88, 12, 0.35);
+  box-shadow: 0 2px 10px rgba(30, 58, 138, 0.2);
 }
 
 .btn-download-all-badges:hover {
-  background: linear-gradient(135deg, var(--mewar-kesariya), var(--kesariya-light));
+  background: linear-gradient(135deg, var(--blue-deep), var(--blue-light-sky));
   transform: translateY(-1px);
 }
 
@@ -1987,8 +2018,8 @@ html, body {
 }
 
 .badge-item-card {
-  background: var(--bg-card-subtle);
-  border: 2px solid var(--border-color);
+  background: var(--bg-card);
+  border: 2px solid var(--border-light);
   border-radius: var(--radius-md);
   padding: 20px 16px;
   text-align: center;
@@ -1997,33 +2028,34 @@ html, body {
   align-items: center;
   transition: all 0.2s ease;
   position: relative;
+  box-shadow: 0 4px 15px rgba(30, 58, 138, 0.04);
 }
 
 .badge-item-card.badge-earned {
-  border-color: var(--mewar-kesariya);
-  background: rgba(234, 88, 12, 0.06);
-  box-shadow: 0 4px 16px rgba(234, 88, 12, 0.15);
+  border-color: var(--blue-royal-dark);
+  background: var(--blue-glacier-soft);
 }
 
 .badge-item-card:hover {
   transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(30, 58, 138, 0.08);
 }
 
 .badge-item-icon {
   font-size: 40px;
   margin-bottom: 8px;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
 }
 
 .badge-item-name {
   font-size: 14.5px;
   font-weight: 800;
-  color: var(--mewar-kesariya);
+  color: var(--blue-royal-dark);
 }
 
 .badge-item-zone {
   font-size: 11px;
-  color: var(--cyan-pichola);
+  color: var(--blue-pichola);
   margin-bottom: 6px;
   font-weight: 700;
 }
@@ -2052,8 +2084,8 @@ html, body {
 
 .btn-download-single-badge {
   background: var(--bg-card);
-  border: 1px solid var(--mewar-kesariya);
-  color: var(--text-primary);
+  border: 1px solid var(--blue-royal-dark);
+  color: var(--blue-royal-dark);
   padding: 6px 12px;
   border-radius: var(--radius-sm);
   font-size: 11px;
@@ -2068,10 +2100,10 @@ html, body {
 }
 
 .btn-download-single-badge:hover {
-  background: var(--mewar-kesariya);
+  background: var(--blue-royal-dark);
   color: #fff;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
 }
 
 .badge-unearned {
@@ -2080,6 +2112,68 @@ html, body {
 
 .badge-unearned .badge-item-status {
   color: var(--text-muted);
+}
+
+/* ==========================================================================
+   APP FOOTER & SOOTHING COPYRIGHT STRIP
+   ========================================================================== */
+
+.app-footer {
+  width: 100%;
+  background: var(--bg-card);
+  border-top: 2px solid var(--blue-pale-bg);
+  padding: 30px 24px;
+  margin-top: 40px;
+}
+
+.footer-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.footer-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-crest {
+  font-size: 28px;
+}
+
+.footer-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--blue-royal-dark);
+  letter-spacing: 0.5px;
+}
+
+.footer-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.footer-copyright {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
+  color: var(--blue-pichola);
+  font-weight: 600;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 /* Confetti Canvas */
@@ -2139,7 +2233,7 @@ html, body {
     border: none !important;
     max-width: 100% !important;
   }
-  .cert-actions-bar, .modal-header {
+  .cert-actions-bar, .modal-header, .modal-footer-copyright {
     display: none !important;
   }
 }
