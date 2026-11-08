@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Udaipur Tour with SPSU Learners - DSA Video Game & Credentialing App | Powered By Kapil</title>
+  <meta name="description" content="FAANG-grade visual RPG video game & comprehensive Data Structures and Algorithms learning tour across Udaipur landmarks for SPSU learners. Earn XP, badges, and high-resolution certificates. Powered By Kapil." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏰</text></svg>" />
+  <!-- Google Fonts Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Confetti Celebration Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Navigation Bar / HUD -->
+  <header class="app-navbar">
+    <div class="nav-brand">
+      <span class="brand-crest">🏰</span>
+      <div class="brand-text">
+        <h1>SPSU Udaipur DSA Quest</h1>
+        <div class="brand-sub">
+          <span class="brand-tag">Royal Expedition</span>
+          <span class="kapil-pill">POWERED BY KAPIL</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-profile-strip">
+      <div class="avatar-badge" id="nav-player-avatar" title="Learner Avatar">🧙‍♂️</div>
+      <div class="profile-info">
+        <span class="player-name" id="nav-player-name">Learner</span>
+        <span class="player-level" id="nav-player-level">Lvl 1 • Novice Explorer</span>
+      </div>
+      <div class="xp-progress-bar-container">
+        <div class="xp-label-row">
+          <span>SPSU DSA Mastery</span>
+          <span id="nav-player-xp">0 XP</span>
+        </div>
+        <div class="xp-track">
+          <div class="xp-fill" id="xp-progress-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <!-- Theme Toggle (Light / Dark) -->
+      <button class="btn-nav btn-theme-toggle" id="btn-theme-toggle" title="Switch Theme (Light/Dark)" aria-label="Toggle Light/Dark Theme">
+        <span id="theme-icon">☀️</span> <span id="theme-label">Light Mode</span>
+      </button>
+      <button class="btn-nav" id="btn-audio-toggle" title="Toggle Game Audio">🔊 Audio On</button>
+      <button class="btn-nav" id="btn-open-badges" title="View Earned Badges">🎖️ Badges</button>
+      <button class="btn-nav btn-cert-nav" id="btn-open-certificate" title="View High-Resolution Certificate">📜 Certificate</button>
+      <button class="btn-nav" id="btn-reset-journey" title="Reset your journey">🔄 Reset</button>
+    </div>
+  </header>
+
+  <!-- Main Overworld Content -->
+  <main class="main-container">
+    <div id="udaipur-map-container">
+      <!-- Dynamically populated by game.js -->
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       MODAL 1: ONBOARDING SCREEN ("User can only enter name and begin journey")
+       ========================================================================== -->
+  <div class="modal-backdrop" id="onboarding-modal">
+    <div class="onboarding-card">
+      <div class="onboarding-crest">🎓</div>
+      <h2 class="onboarding-title">Udaipur DSA Tour</h2>
+      <p class="onboarding-subtitle">Sir Padampat Singhania University (SPSU)</p>
+      <div class="onboarding-powered">⚡ POWERED BY KAPIL • OFFICIAL CREDENTIALING ⚡</div>
+      <p class="onboarding-desc">
+        Embark on an interactive visual video game journey across Udaipur landmarks. Master all core DSA concepts, simulate algorithms step-by-step, earn XP & royal badges, and unlock your official high-digital resolution SPSU Certificate!
+      </p>
+
+      <form id="onboarding-form">
+        <div class="onboarding-input-group">
+          <label for="learner-name-input">ENTER YOUR NAME TO BEGIN JOURNEY</label>
+          <input
+            type="text"
+            id="learner-name-input"
+            class="input-learner-name"
+            placeholder="e.g. Aarav Sharma"
+            maxlength="40"
+            autocomplete="name"
+            required
+            autofocus
+          />
+        </div>
+        <button type="submit" class="btn-embark" id="btn-start-journey">
+          🚀 Embark on SPSU Journey ➔
+        </button>
+      </form>
+
+      <p class="onboarding-footer-note">
+        Certified &amp; Powered By Kapil • Progress saved automatically on this device.
+      </p>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: ZONE EXPLORATION MODAL (Theory, Visualizer, Challenge, Code Lab)
+       ========================================================================== -->
+  <div class="modal-backdrop" id="zone-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <span class="modal-title-icon" id="zone-modal-icon">🏛️</span>
+          <div>
+            <h3 class="modal-heading" id="zone-modal-title">Zone 1: SPSU Campus</h3>
+            <p class="modal-subheading" id="zone-modal-subtitle">Contiguous Memory & Two-Pointer Logic</p>
+          </div>
+        </div>
+        <button class="btn-close-modal" id="btn-close-zone-modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="zone-tabs-nav">
+        <button class="zone-tab-btn active" data-tab="theory">📖 Concept &amp; Lore</button>
+        <button class="zone-tab-btn" data-tab="visualizer">🎮 Visualizer &amp; Sim</button>
+        <button class="zone-tab-btn" data-tab="challenge">⚔️ Arena Challenge</button>
+        <button class="zone-tab-btn" data-tab="codelab">💻 Code Lab</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Tab 1: Theory & Lore -->
+        <div class="zone-tab-pane active" data-tab="theory">
+          <div id="theory-content-container"></div>
+        </div>
+
+        <!-- Tab 2: Visualizer & Step Player -->
+        <div class="zone-tab-pane" data-tab="visualizer">
+          <div class="visualizer-card">
+            <div class="visualizer-controls-bar">
+              <div class="vis-controls-left">
+                <button class="btn-vis-ctrl btn-vis-play" id="btn-vis-play">▶️ Play Steps</button>
+                <button class="btn-vis-ctrl" id="btn-vis-prev">⏮️ Prev</button>
+                <button class="btn-vis-ctrl" id="btn-vis-next">⏭️ Next</button>
+                <button class="btn-vis-ctrl" id="btn-vis-reset">🔄 Reset</button>
+              </div>
+              <div class="vis-controls-right">
+                <span class="vis-step-status" id="vis-step-status">Step 1 of 1</span>
+                <select class="vis-speed-select" id="vis-speed-select" aria-label="Simulation speed">
+                  <option value="1200">Speed: 0.5x</option>
+                  <option value="800" selected>Speed: 1x</option>
+                  <option value="400">Speed: 2x</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Visual Stage -->
+            <div class="vis-stage-box" id="visualizer-render-area"></div>
+
+            <!-- Step Commentary -->
+            <div class="vis-commentary-box" id="vis-step-comment">
+              Ready to explore algorithm.
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Interactive Challenge -->
+        <div class="zone-tab-pane" data-tab="challenge">
+          <div class="challenge-card">
+            <div id="challenge-question"></div>
+            <div class="challenge-options-grid" id="challenge-options"></div>
+            <div id="challenge-feedback"></div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Code Lab -->
+        <div class="zone-tab-pane" data-tab="codelab">
+          <div class="code-lab-card">
+            <div class="code-lab-top-bar">
+              <div class="code-lang-selector">
+                <button class="code-lang-btn active" data-lang="cpp">C++</button>
+                <button class="code-lang-btn" data-lang="java">Java</button>
+                <button class="code-lang-btn" data-lang="python">Python</button>
+                <button class="code-lang-btn" data-lang="javascript">JavaScript</button>
+              </div>
+              <button class="btn-copy-code" id="btn-copy-code">📋 Copy Code</button>
+            </div>
+            <div class="code-view-container">
+              <pre><code id="code-display-block">// Algorithm code</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 3: HIGH-DIGITAL RESOLUTION CERTIFICATE MODAL
+       ========================================================================== -->
+  <div class="modal-backdrop" id="cert-modal">
+    <div class="modal-dialog cert-dialog">
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <span class="modal-title-icon">📜</span>
+          <div>
+            <h3 class="modal-heading">Official SPSU High-Resolution Credential</h3>
+            <p class="modal-subheading">Sir Padampat Singhania University • Certified &amp; Powered By Kapil</p>
+          </div>
+        </div>
+        <button class="btn-close-modal" id="btn-close-cert-modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Responsive High-DPI Vector SVG Preview (Zero Spillover) -->
+        <div class="cert-preview-wrapper" id="cert-svg-target"></div>
+
+        <div class="cert-actions-bar">
+          <div class="cert-meta-info">
+            ✨ Ultra-crisp 4K 300-DPI high-digital resolution export • <strong>Certified &amp; Powered By Kapil</strong>
+          </div>
+          <div class="cert-btn-group">
+            <button class="btn-cert-print" id="btn-print-cert">🖨️ Print Certificate</button>
+            <button class="btn-cert-download" id="btn-download-cert">📥 Download 4K Certificate (PNG)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 4: BADGES & ACHIEVEMENTS MODAL (Powered By Kapil)
+       ========================================================================== -->
+  <div class="modal-backdrop" id="badges-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <span class="modal-title-icon">🎖️</span>
+          <div>
+            <h3 class="modal-heading">Royal Udaipur DSA Badges &amp; Honors</h3>
+            <p class="modal-subheading">Official SPSU Achievements • Powered By Kapil</p>
+          </div>
+        </div>
+        <button class="btn-close-modal" id="btn-close-badges-modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="badges-grid" id="badges-grid-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Script Modules -->
+  <script type="module" src="js/audio.js"></script>
+  <script type="module" src="js/state.js"></script>
+  <script type="module" src="js/data/zones.js"></script>
+  <script type="module" src="js/visualizer.js"></script>
+  <script type="module" src="js/certificate.js"></script>
+  <script type="module" src="js/game.js"></script>
+</body>
+</html>

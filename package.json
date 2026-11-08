@@ -1,0 +1,24 @@
+{
+  "name": "udaipur-spsu-dsa-quest",
+  "version": "1.0.0",
+  "description": "Udaipur Tour with SPSU Learners - Visual DSA Adventure Video Game & Credentialing App | Powered By Kapil",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/deep_suite.test.js"
+  },
+  "keywords": [
+    "dsa",
+    "spsu",
+    "udaipur",
+    "game",
+    "algorithms",
+    "data-structures",
+    "learning",
+    "kapil",
+    "certification"
+  ],
+  "author": "Kapil Narula & SPSU Computer Science",
+  "license": "MIT"
+}
