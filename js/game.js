@@ -5,11 +5,13 @@ import { gameState } from './state.js';
 import { sound } from './audio.js';
 import { VisualizerEngine } from './visualizer.js';
 import { CertificateGenerator } from './certificate.js';
+import { BadgeDownloader } from './badge_download.js';
 
 class GameController {
   constructor() {
     this.visualizer = null;
     this.certGen = new CertificateGenerator(gameState);
+    this.badgeDownloader = new BadgeDownloader(gameState);
     this.activeZone = null;
     this.activeTab = 'theory';
     this.activeCodeLang = 'cpp';
@@ -341,6 +343,13 @@ class GameController {
     sound.playFanfare();
     gameState.startJourney(rawName);
     this.triggerConfetti();
+      setTimeout(() => { const victoryBadgeBtn = document.getElementById('btn-victory-download-badge');
+        if (victoryBadgeBtn) {
+          victoryBadgeBtn.addEventListener('click', () => {
+            sound.playSuccess();
+            this.badgeDownloader.downloadBadge(zone.badge, zone);
+          });
+        } }, 50);
 
     if (this.onboardingModal) {
       this.onboardingModal.classList.remove('modal-open');
@@ -924,10 +933,25 @@ class GameController {
     }
   }
 
-  openBadgesModal() {
+    openBadgesModal() {
     if (!this.badgesGrid) return;
 
-    this.badgesGrid.innerHTML = ZONES.map(z => {
+    const earnedBadgesCount = ZONES.filter(z => gameState.hasBadge(z.badge.id)).length;
+
+    let headerHtml = `
+      <div class="badges-header-actions" style="grid-column: 1 / -1; width: 100%;">
+        <span class="badges-count-status">
+          🏆 Royal Badges Conquered: <strong>${earnedBadgesCount} of 10 Landmarks</strong> (Certified &amp; Powered By Kapil)
+        </span>
+        ${earnedBadgesCount > 0 ? `
+          <button class="btn-download-all-badges" id="btn-download-earned-badges">
+            📥 Download All Earned Badges (PNG Archive)
+          </button>
+        ` : ''}
+      </div>
+    `;
+
+    const cardsHtml = ZONES.map(z => {
       const hasEarned = gameState.hasBadge(z.badge.id);
       return `
         <div class="badge-item-card ${hasEarned ? 'badge-earned' : 'badge-unearned'}">
@@ -935,10 +959,45 @@ class GameController {
           <div class="badge-item-name">${z.badge.name}</div>
           <div class="badge-item-zone">${z.title}</div>
           <p class="badge-item-desc">${z.badge.desc}</p>
-          <div class="badge-item-status">${hasEarned ? '✅ UNLOCKED' : '🔒 LOCKED'}</div>
+          <div class="badge-card-footer">
+            <div class="badge-item-status">${hasEarned ? '✅ UNLOCKED' : '🔒 LOCKED'}</div>
+            ${hasEarned ? `
+              <button class="btn-download-single-badge" data-badge-id="${z.badge.id}" data-zone-id="${z.id}">
+                📥 Download Badge (PNG)
+              </button>
+            ` : ''}
+          </div>
         </div>
       `;
     }).join('');
+
+    this.badgesGrid.innerHTML = headerHtml + cardsHtml;
+
+    // Attach click events on badge download buttons
+    this.badgesGrid.querySelectorAll('.btn-download-single-badge').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const zoneId = parseInt(btn.dataset.zoneId, 10);
+        const zone = ZONES.find(z => z.id === zoneId);
+        if (zone) {
+          sound.playSuccess();
+          this.badgeDownloader.downloadBadge(zone.badge, zone);
+        }
+      });
+    });
+
+    const btnDownloadAll = document.getElementById('btn-download-earned-badges');
+    if (btnDownloadAll) {
+      btnDownloadAll.addEventListener('click', () => {
+        sound.playFanfare();
+        const earnedZones = ZONES.filter(z => gameState.hasBadge(z.badge.id));
+        earnedZones.forEach((z, idx) => {
+          setTimeout(() => {
+            this.badgeDownloader.downloadBadge(z.badge, z);
+          }, idx * 300);
+        });
+      });
+    }
 
     if (this.badgesModal) {
       this.badgesModal.classList.add('modal-open');

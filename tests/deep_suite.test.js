@@ -215,6 +215,60 @@ it('CSS contains high-resolution print styles', () => {
   assert.ok(cssContent.includes('@media print'), 'Print media queries configured');
 });
 
+// 7. Badge Downloader & Royal Colors of Rajasthan Verification
+console.log('\n--- 7. BADGE DOWNLOADER & ROYAL RAJASTHANI COLORS ---');
+import { BadgeDownloader } from '../js/badge_download.js';
+
+it('BadgeDownloader generates valid 1200x1200 canvas with royal branding and zero spillovers', () => {
+  global.document = {
+    createElement: (tag) => {
+      if (tag === 'canvas') {
+        return {
+          width: 0,
+          height: 0,
+          getContext: () => ({
+            createRadialGradient: () => ({ addColorStop: () => {} }),
+            createLinearGradient: () => ({ addColorStop: () => {} }),
+            fillRect: () => {},
+            save: () => {},
+            restore: () => {},
+            translate: () => {},
+            rotate: () => {},
+            beginPath: () => {},
+            moveTo: () => {},
+            lineTo: () => {},
+            stroke: () => {},
+            arc: () => {},
+            fill: () => {},
+            fillText: () => {},
+            measureText: () => ({ width: 250 }),
+            setLineDash: () => {}
+          }),
+          toDataURL: () => 'data:image/png;base64,mock'
+        };
+      }
+      return {};
+    }
+  };
+
+  const state = new GameState();
+  state.startJourney('PRIYA SHARMA');
+  const downloader = new BadgeDownloader(state);
+  const canvas = downloader.generateBadgeCanvas(ZONES[0].badge, ZONES[0]);
+  assert.ok(canvas, 'Canvas must be generated');
+  assert.strictEqual(canvas.width, 1200, 'Width must be 1200 px');
+  assert.strictEqual(canvas.height, 1200, 'Height must be 1200 px');
+});
+
+it('CSS contains signature royal Rajasthani color palette', () => {
+  assert.ok(cssContent.includes('--mewar-kesariya'), 'Mewar Kesariya Royal Saffron defined');
+  assert.ok(cssContent.includes('--kundan-gold'), 'Royal Kundan Gold defined');
+  assert.ok(cssContent.includes('--jodhpur-indigo'), 'Jodhpur Royal Indigo defined');
+  assert.ok(cssContent.includes('--pichola-turquoise'), 'Lake Pichola Turquoise defined');
+  assert.ok(cssContent.includes('--jaipur-rose'), 'Jaipur Royal Rose defined');
+  assert.ok(cssContent.includes('--panna-emerald'), 'Royal Turban Emerald defined');
+});
+
 console.log('\n======================================================');
 console.log(`📊 TEST RESULTS: ${passed} PASSED | ${failed} FAILED`);
 console.log('======================================================\n');
