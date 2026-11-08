@@ -32,6 +32,40 @@ function it(desc, fn) {
   }
 }
 
+
+// 9. DSA Graph Topology & Shortest Path First Verification
+console.log('\n--- 9. DSA GRAPH TOPOLOGY & SHORTEST PATH FIRST ---');
+import { GRAPH_STAGES, GRAPH_EDGES } from '../js/data/zones.js';
+
+it('DSA Graph Topology defines 6 distinct stages from Source to Destination', () => {
+  assert.strictEqual(GRAPH_STAGES.length, 6, 'Must define 6 topological stages');
+  assert.strictEqual(GRAPH_STAGES[0].stage, 0, 'Stage 0 must be Source');
+  assert.strictEqual(GRAPH_STAGES[5].stage, 5, 'Stage 5 must be Final Destination');
+});
+
+it('All 10 vertices have spacious, non-colliding coordinates (minimum distance >= 180px)', () => {
+  for (let i = 0; i < ZONES.length; i++) {
+    for (let j = i + 1; j < ZONES.length; j++) {
+      const dx = ZONES[i].mapCoords.x - ZONES[j].mapCoords.x;
+      const dy = ZONES[i].mapCoords.y - ZONES[j].mapCoords.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      assert.ok(dist >= 180, 'Distance between Zone ' + ZONES[i].id + ' and Zone ' + ZONES[j].id + ' (' + dist.toFixed(1) + 'px) must be >= 180px to prevent clutter');
+    }
+  }
+});
+
+it('Shortest Path edges form a contiguous optimal Dijkstra path from Source (1) to Destination (10)', () => {
+  const shortestEdges = GRAPH_EDGES.filter(e => e.isShortestPath);
+  assert.strictEqual(shortestEdges.length, 9, 'Must have exactly 9 shortest path edges for 10 vertices');
+  for (let i = 0; i < 9; i++) {
+    assert.strictEqual(shortestEdges[i].from, i + 1, 'Edge ' + i + ' must start at vertex ' + (i + 1));
+    assert.strictEqual(shortestEdges[i].to, i + 2, 'Edge ' + i + ' must end at vertex ' + (i + 2));
+    assert.ok(shortestEdges[i].weight > 0, 'Edge weight must be positive');
+  }
+  const totalDist = shortestEdges.reduce((sum, e) => sum + e.weight, 0);
+  assert.strictEqual(totalDist.toFixed(1), '28.0', 'Total shortest path distance must equal 28.0 km');
+});
+
 console.log('\n======================================================');
 console.log('🧪 RUNNING FAANG-GRADE DEEP TEST SUITE: SPSU UDAIPUR DSA');
 console.log('======================================================\n');

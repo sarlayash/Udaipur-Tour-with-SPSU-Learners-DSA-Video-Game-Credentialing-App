@@ -1,6 +1,6 @@
 // Udaipur Tour with SPSU Learners - Main Video Game Engine
 // Powered By Kapil • Sir Padampat Singhania University (SPSU)
-import { ZONES } from './data/zones.js';
+import { ZONES, GRAPH_EDGES, GRAPH_STAGES } from './data/zones.js';
 import { gameState } from './state.js';
 import { sound } from './audio.js';
 import { VisualizerEngine } from './visualizer.js';
@@ -16,6 +16,7 @@ class GameController {
     this.activeTab = 'theory';
     this.activeCodeLang = 'cpp';
     this.currentTheme = 'dark';
+    this.shortestPathOnly = true;
   }
 
   init() {
@@ -495,157 +496,310 @@ class GameController {
   }
 
   renderInteractiveUdaipurMap(currentZone, avatarIcon) {
-    // Generate route path points through zones 1 to 10
-    const points = ZONES.map(z => `${z.mapCoords.x},${z.mapCoords.y}`).join(' ');
+    const totalShortestDist = '28.0 km';
+    const shortestPathSequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const svgWidth = 1200;
+    const svgHeight = 660;
 
     return `
-      <div class="udaipur-interactive-map-frame">
-        <div class="map-legend-bar">
-          <div class="legend-item"><span class="legend-dot dot-source"></span> Source (SPSU)</div>
-          <div class="legend-item"><span class="legend-dot dot-conquered"></span> Conquered (⭐)</div>
-          <div class="legend-item"><span class="legend-dot dot-current"></span> Current Location (📍)</div>
-          <div class="legend-item"><span class="legend-dot dot-locked"></span> Locked Landmark (🔒)</div>
-          <div class="legend-item"><span class="legend-dot dot-dest"></span> Final Destination (👑)</div>
-          <div class="map-hint">💡 Click any unlocked location pin on the map to travel and begin challenges!</div>
+      <div class="udaipur-interactive-map-frame dsa-graph-frame">
+        <!-- DSA Graph Top Telemetry & Shortest Path Controls -->
+        <div class="dsa-graph-hud-bar">
+          <div class="dsa-graph-hud-left">
+            <span class="dsa-graph-title-pill">⚡ DSA GRAPH TOPOLOGY: G = (V, E)</span>
+            <span class="dsa-graph-specs">|V| = 10 Landmarks • |E| = 17 Weighted Edges</span>
+            <span class="dsa-graph-algo">Dijkstra Shortest Path: O((V + E) log V)</span>
+          </div>
+          <div class="dsa-graph-hud-right">
+            <button class="btn-shortest-path-toggle ${this.shortestPathOnly ? 'active' : ''}" id="btn-toggle-shortest-path" title="Toggle Shortest Path First / All Routes">
+              ${this.shortestPathOnly ? '⚡ Shortest Path First (ACTIVE)' : '🌐 Show All Graph Pathways'}
+            </button>
+          </div>
         </div>
 
+        <!-- Shortest Path Route Chain Strip -->
+        <div class="dsa-shortest-path-strip">
+          <div class="strip-label">🏆 SHORTEST PATH FIRST:</div>
+          <div class="strip-nodes-flow">
+            ${shortestPathSequence.map((zid, idx) => {
+              const z = ZONES.find(item => item.id === zid);
+              const isConquered = gameState.hasBadge(z.badge.id);
+              const isCurrent = currentZone.id === zid;
+              return `
+                <div class="flow-node-chip ${isCurrent ? 'chip-current' : isConquered ? 'chip-conquered' : ''}" data-zone-id="${z.id}" title="Click to view Zone ${z.id}">
+                  <span class="chip-num">V${z.id}</span>
+                  <span class="chip-name">${z.title.split(',')[0]}</span>
+                  <span class="chip-cost">${z.mapCoords.shortestDist}</span>
+                </div>
+                ${idx < shortestPathSequence.length - 1 ? '<span class="flow-arrow">➔</span>' : ''}
+              `;
+            }).join('')}
+          </div>
+          <div class="strip-total-dist">
+            <span>Total Optimal Distance: <strong>${totalShortestDist}</strong></span>
+          </div>
+        </div>
+
+        <!-- Main SVG DSA Graph Canvas -->
         <div class="svg-map-wrapper">
-          <svg viewBox="0 0 1200 700" class="udaipur-vector-map" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 ${svgWidth} ${svgHeight}" class="udaipur-vector-map dsa-vector-graph" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#0284c7" stop-opacity="0.75" />
-                <stop offset="50%" stop-color="#06b6d4" stop-opacity="0.85" />
-                <stop offset="100%" stop-color="#0369a1" stop-opacity="0.9" />
+              <!-- Arrowhead for Shortest Path Edges (Blue/Cyan) -->
+              <marker id="arrow-shortest" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#0284c7" />
+              </marker>
+
+              <!-- Arrowhead for Conquered Path -->
+              <marker id="arrow-conquered" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#10b981" />
+              </marker>
+
+              <!-- Arrowhead for Alternative Edges -->
+              <marker id="arrow-alt" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 2 L 8 5 L 0 8 z" fill="#94a3b8" />
+              </marker>
+
+              <!-- Shortest Path Neon Gradient -->
+              <linearGradient id="shortestPathGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0284c7" />
+                <stop offset="50%" stop-color="#38bdf8" />
+                <stop offset="100%" stop-color="#0ea5e9" />
               </linearGradient>
-              <linearGradient id="hillGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#1e293b" stop-opacity="0.8" />
-                <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9" />
-              </linearGradient>
-              <linearGradient id="routeConquered" x1="0%" y1="0%" x2="100%" y2="100%">
+
+              <linearGradient id="goldConqueredGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#f59e0b" />
                 <stop offset="100%" stop-color="#10b981" />
               </linearGradient>
-              <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="4" result="blur" />
+
+              <!-- Subtle Grid Background -->
+              <pattern id="dsaGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--border-light)" stroke-width="0.75" stroke-dasharray="3,3" opacity="0.6" />
+              </pattern>
+
+              <!-- Glow Filter -->
+              <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3.5" result="blur" />
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
               </filter>
             </defs>
 
-            <!-- Map Background Terrain: Mewar & Aravalli Valleys -->
-            <rect width="1200" height="700" fill="var(--bg-main)" />
+            <!-- Background Canvas with Topological Grid -->
+            <rect width="${svgWidth}" height="${svgHeight}" fill="var(--bg-main)" />
+            <rect width="${svgWidth}" height="${svgHeight}" fill="url(#dsaGrid)" />
 
-            <!-- Stylized Topographic Elevation Lines (Aravalli Range) -->
-            <path d="M 0,180 Q 200,80 350,140 T 700,90 T 1000,160 T 1200,110" fill="none" stroke="var(--border-color)" stroke-width="2" stroke-dasharray="4,6" opacity="0.4" />
-            <path d="M 0,320 Q 180,240 380,290 T 800,240 T 1200,280" fill="none" stroke="var(--border-color)" stroke-width="2" stroke-dasharray="4,6" opacity="0.3" />
-            <path d="M 0,540 Q 240,480 460,530 T 900,480 T 1200,520" fill="none" stroke="var(--border-color)" stroke-width="2" stroke-dasharray="4,6" opacity="0.4" />
+            <!-- Stage Columns (Topological Layout) -->
+            ${GRAPH_STAGES.map(stage => `
+              <g class="graph-stage-column" opacity="0.85">
+                <line x1="${stage.x}" y1="36" x2="${stage.x}" y2="625" stroke="var(--border-light)" stroke-width="1.2" stroke-dasharray="4,6" opacity="0.5" />
+                <rect x="${stage.x - 70}" y="10" width="140" height="22" rx="11" fill="var(--bg-card)" stroke="var(--border-color)" stroke-width="1" />
+                <text x="${stage.x}" y="25" text-anchor="middle" font-size="8.5" font-weight="800" fill="var(--text-muted)">${stage.title}</text>
+              </g>
+            `).join('')}
 
-            <!-- Aravalli Hills Shaded Silhouettes (West & Northwest) -->
-            <!-- Bansdara / Sajjangarh Hill -->
-            <polygon points="120,400 230,220 340,400" fill="url(#hillGrad)" stroke="var(--border-color)" stroke-width="1.5" />
-            <text x="230" y="210" fill="#94a3b8" font-size="11" font-weight="700" text-anchor="middle">Bansdara Peak (938m)</text>
+            <!-- 1. GRAPH EDGES -->
+            <!-- Render Alternative Edges first so Shortest Path sits on top -->
+            <g class="graph-edges-layer">
+              ${GRAPH_EDGES.filter(e => !e.isShortestPath).map(edge => {
+                const u = ZONES.find(z => z.id === edge.from);
+                const v = ZONES.find(z => z.id === edge.to);
+                if (!u || !v) return '';
 
-            <!-- Kumbhalgarh High Ridge (Northwest) -->
-            <polygon points="60,250 175,70 300,250" fill="url(#hillGrad)" stroke="var(--border-color)" stroke-width="1.5" />
-            <text x="175" y="60" fill="#f59e0b" font-size="11" font-weight="800" text-anchor="middle">Kumbhalgarh Ridge (1,100m)</text>
+                const x1 = u.mapCoords.x;
+                const y1 = u.mapCoords.y;
+                const x2 = v.mapCoords.x;
+                const y2 = v.mapCoords.y;
 
-            <!-- Water Bodies of Udaipur -->
-            <!-- 1. Fateh Sagar Lake -->
-            <ellipse cx="440" cy="260" rx="95" ry="60" fill="url(#waterGrad)" stroke="#38bdf8" stroke-width="2" />
-            <!-- Nehru Park Island in Fateh Sagar -->
-            <ellipse cx="440" cy="260" rx="20" ry="12" fill="#15803d" stroke="#fef08a" stroke-width="1" />
-            <text x="440" y="240" fill="#e0f2fe" font-size="12" font-weight="800" text-anchor="middle" filter="url(#neonGlow)">Fateh Sagar Lake</text>
-            <text x="440" y="264" fill="#ffffff" font-size="9" font-weight="700" text-anchor="middle">Nehru Park</text>
+                const dx = x2 - x1;
+                const dy = y2 - y1;
+                const len = Math.sqrt(dx * dx + dy * dy);
+                const r = 26;
+                const startX = x1 + (dx / len) * r;
+                const startY = y1 + (dy / len) * r;
+                const endX = x2 - (dx / len) * (r + 7);
+                const endY = y2 - (dy / len) * (r + 7);
 
-            <!-- 2. Lake Pichola -->
-            <path d="M 400,430 C 420,380 560,390 580,440 C 600,520 540,590 470,580 C 410,570 380,480 400,430 Z" fill="url(#waterGrad)" stroke="#38bdf8" stroke-width="2" />
-            <!-- Jag Mandir Island inside Pichola -->
-            <ellipse cx="450" cy="530" rx="26" ry="16" fill="#ca8a04" stroke="#fef08a" stroke-width="1.5" />
-            <text x="510" y="470" fill="#e0f2fe" font-size="13" font-weight="800" text-anchor="middle" filter="url(#neonGlow)">Lake Pichola</text>
-            <text x="450" y="534" fill="#0b1120" font-size="8.5" font-weight="900" text-anchor="middle">Jag Mandir</text>
+                const midX = (x1 + x2) / 2;
+                const midY = (y1 + y2) / 2 + (dy === 0 ? -12 : (dx < 0 ? -10 : 10));
 
-            <!-- Connecting Swaroop Sagar Canal -->
-            <path d="M 460,320 Q 480,360 475,395" fill="none" stroke="#38bdf8" stroke-width="8" stroke-linecap="round" opacity="0.8" />
-            <text x="495" y="360" fill="#38bdf8" font-size="9" font-weight="700">Swaroop Sagar</text>
+                const opacity = this.shortestPathOnly ? '0.18' : '0.65';
 
-            <!-- Connecting Highway from SPSU Bhatewar (NH-76) -->
-            <path d="M 960,560 Q 750,520 590,495" fill="none" stroke="#64748b" stroke-width="4" stroke-dasharray="6,6" opacity="0.5" />
-            <text x="800" y="535" fill="#94a3b8" font-size="10" font-weight="600" text-anchor="middle">NH-76 (Udaipur - Chittorgarh Hwy)</text>
-
-            <!-- The Royal DSA Expedition Trajectory (Winding Path Through All 10 Landmarks) -->
-            <!-- Base Road Track -->
-            <polyline points="${points}" fill="none" stroke="var(--border-color)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" />
-            <!-- Active Pathway Glowing Animation -->
-            <polyline points="${points}" fill="none" stroke="url(#routeConquered)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10,8" class="animated-route-line" />
-
-            <!-- Landmark Location Points / Pins -->
-            ${ZONES.map(z => {
-              const isSource = z.id === 1;
-              const isFinal = z.id === 10;
-              const isUnlocked = gameState.isZoneUnlocked(z.id);
-              const isConquered = gameState.hasBadge(z.badge.id);
-              const isCurrent = currentZone.id === z.id;
-
-              let pinColor = '#475569'; // locked
-              let strokeColor = '#64748b';
-              if (isConquered) {
-                pinColor = '#f59e0b';
-                strokeColor = '#fbbf24';
-              } else if (isCurrent) {
-                pinColor = '#06b6d4';
-                strokeColor = '#38bdf8';
-              } else if (isUnlocked) {
-                pinColor = '#10b981';
-                strokeColor = '#34d399';
-              }
-
-              return `
-                <!-- Landmark Pin for Zone ${z.id} -->
-                <g class="map-landmark-group ${isCurrent ? 'current-pin-group' : ''} ${!isUnlocked ? 'locked-pin-group' : ''}" data-zone-id="${z.id}" transform="translate(${z.mapCoords.x}, ${z.mapCoords.y})">
-                  <!-- Pulse Ripple for Current Pin -->
-                  ${isCurrent ? `
-                    <circle cx="0" cy="0" r="28" fill="none" stroke="#38bdf8" stroke-width="2" class="avatar-ripple" />
-                    <circle cx="0" cy="0" r="38" fill="none" stroke="#f59e0b" stroke-width="1.5" class="avatar-ripple-delayed" />
-                  ` : ''}
-
-                  <!-- Outer Pin Disc -->
-                  <circle cx="0" cy="0" r="18" fill="${pinColor}" stroke="${strokeColor}" stroke-width="2.5" class="pin-disc" />
-
-                  <!-- Pin Icon -->
-                  <text x="0" y="5" text-anchor="middle" font-size="14">${z.icon}</text>
-
-                  <!-- Landmark Tag / Label Banner -->
-                  <g transform="translate(0, -26)">
-                    <rect x="-85" y="-18" width="170" height="20" rx="4" fill="var(--bg-card)" stroke="${strokeColor}" stroke-width="1.2" />
-                    <text x="0" y="-4" text-anchor="middle" fill="var(--text-primary)" font-size="10" font-weight="800">
-                      ${isSource ? '🏁 1. SOURCE: SPSU' : isFinal ? '👑 10. FINAL DESTINATION' : `${z.id}. ${z.title.split(',')[0]}`}
-                    </text>
+                return `
+                  <g class="graph-edge-alt" opacity="${opacity}">
+                    <line x1="${startX}" y1="${startY}" x2="${endX}" y2="${endY}" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="6,5" marker-end="url(#arrow-alt)" />
+                    <g transform="translate(${midX}, ${midY})">
+                      <rect x="-20" y="-8.5" width="40" height="17" rx="8.5" fill="var(--bg-card)" stroke="var(--border-color)" stroke-width="1" />
+                      <text x="0" y="3.5" text-anchor="middle" font-size="8" font-weight="700" fill="var(--text-muted)">${edge.label}</text>
+                    </g>
                   </g>
+                `;
+              }).join('')}
 
-                  <!-- Concept Pill below -->
-                  <g transform="translate(0, 24)">
-                    <rect x="-65" y="0" width="130" height="15" rx="3" fill="var(--bg-card-subtle)" stroke="var(--border-color)" stroke-width="1" />
-                    <text x="0" y="11" text-anchor="middle" fill="var(--gold-primary)" font-size="8.5" font-weight="700">
-                      ${z.concept.split('&')[0].trim()}
-                    </text>
+              <!-- Shortest Path Edges (Prominently Highlighted with Glow) -->
+              ${GRAPH_EDGES.filter(e => e.isShortestPath).map(edge => {
+                const u = ZONES.find(z => z.id === edge.from);
+                const v = ZONES.find(z => z.id === edge.to);
+                if (!u || !v) return '';
+
+                const x1 = u.mapCoords.x;
+                const y1 = u.mapCoords.y;
+                const x2 = v.mapCoords.x;
+                const y2 = v.mapCoords.y;
+
+                const dx = x2 - x1;
+                const dy = y2 - y1;
+                const len = Math.sqrt(dx * dx + dy * dy);
+                const r = 26;
+                const startX = x1 + (dx / len) * r;
+                const startY = y1 + (dy / len) * r;
+                const endX = x2 - (dx / len) * (r + 8);
+                const endY = y2 - (dy / len) * (r + 8);
+
+                const midX = (x1 + x2) / 2;
+                const midY = (y1 + y2) / 2;
+
+                const isEdgeConquered = gameState.hasBadge(u.badge.id) && gameState.hasBadge(v.badge.id);
+                const strokeColor = isEdgeConquered ? 'url(#goldConqueredGrad)' : 'url(#shortestPathGrad)';
+                const markerId = isEdgeConquered ? 'url(#arrow-conquered)' : 'url(#arrow-shortest)';
+
+                return `
+                  <g class="graph-edge-shortest">
+                    <!-- Broad glow line -->
+                    <line x1="${startX}" y1="${startY}" x2="${endX}" y2="${endY}" stroke="#0284c7" stroke-width="8" stroke-opacity="0.2" stroke-linecap="round" />
+                    <!-- Crisp animated shortest path stroke -->
+                    <line x1="${startX}" y1="${startY}" x2="${endX}" y2="${endY}" stroke="${strokeColor}" stroke-width="4.5" stroke-linecap="round" marker-end="${markerId}" class="animated-shortest-edge" stroke-dasharray="10,6" />
+                    <!-- Shortest Path Edge Weight Badge -->
+                    <g transform="translate(${midX}, ${midY})">
+                      <rect x="-24" y="-10" width="48" height="20" rx="10" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5" filter="url(#neonGlow)" />
+                      <text x="0" y="3.5" text-anchor="middle" font-size="9" font-weight="900" fill="#ffffff">⚡ ${edge.label}</text>
+                    </g>
                   </g>
-                </g>
-              `;
-            }).join('')}
+                `;
+              }).join('')}
+            </g>
 
-            <!-- Animated Learner Avatar at Current Position -->
+            <!-- 2. GRAPH VERTICES & NON-OVERLAPPING INFO CARDS -->
+            <g class="graph-nodes-layer">
+              ${ZONES.map(z => {
+                const isSource = (z.id === 1);
+                const isFinal = (z.id === 10);
+                const isUnlocked = gameState.isZoneUnlocked(z.id);
+                const isConquered = gameState.hasBadge(z.badge.id);
+                const isCurrent = (currentZone.id === z.id);
+
+                const x = z.mapCoords.x;
+                const y = z.mapCoords.y;
+
+                // Determine whether card sits above or below vertex
+                let cardY = 65;
+                let connectorY1 = 140;
+                let connectorY2 = y - 26;
+
+                if (y > 400) {
+                  // Lower row
+                  cardY = 515;
+                  connectorY1 = y + 26;
+                  connectorY2 = 515;
+                } else if (y > 250 && y < 400) {
+                  // Middle row (Source & Final)
+                  cardY = 210;
+                  connectorY1 = 285;
+                  connectorY2 = y - 26;
+                }
+
+                // Node coloring & state
+                let discFill = '#334155';
+                let discStroke = '#64748b';
+                let statusTagText = '🔒 Locked';
+                let statusTagColor = '#64748b';
+
+                if (isConquered) {
+                  discFill = '#f59e0b';
+                  discStroke = '#fbbf24';
+                  statusTagText = '⭐ Conquered';
+                  statusTagColor = '#d97706';
+                } else if (isCurrent) {
+                  discFill = '#0284c7';
+                  discStroke = '#38bdf8';
+                  statusTagText = '📍 Current Location';
+                  statusTagColor = '#0284c7';
+                } else if (isUnlocked) {
+                  discFill = '#10b981';
+                  discStroke = '#34d399';
+                  statusTagText = '🔓 Unlocked (Ready)';
+                  statusTagColor = '#059669';
+                }
+
+                const cardWidth = 158;
+                const cardHeight = 74;
+                const cardX = x - (cardWidth / 2);
+
+                return `
+                  <!-- Vertex G Group for Zone ${z.id} -->
+                  <g class="dsa-vertex-group ${isCurrent ? 'current-vertex' : ''} ${!isUnlocked ? 'locked-vertex' : ''}" data-zone-id="${z.id}" style="cursor: pointer;">
+                    <!-- Connector line between card and circle -->
+                    <line x1="${x}" y1="${connectorY1}" x2="${x}" y2="${connectorY2}" stroke="${discStroke}" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.75" />
+
+                    <!-- Vertex Info Card -->
+                    <g transform="translate(${cardX}, ${cardY})" class="vertex-card-svg">
+                      <rect width="${cardWidth}" height="${cardHeight}" rx="8" fill="var(--bg-card)" stroke="${isCurrent ? '#0284c7' : isConquered ? '#f59e0b' : 'var(--border-color)'}" stroke-width="${isCurrent ? 2 : 1.2}" />
+                      
+                      <!-- Card Title Row -->
+                      <text x="8" y="18" font-size="10" font-weight="900" fill="var(--text-primary)">
+                        ${isSource ? '🏁 1. SPSU Campus (Source)' : isFinal ? '👑 10. SPSU Convocation' : `V${z.id}. ${z.title.split(',')[0]}`}
+                      </text>
+
+                      <!-- Concept Tag Pill -->
+                      <rect x="8" y="24" width="${cardWidth - 16}" height="17" rx="4" fill="var(--bg-card-subtle)" />
+                      <text x="12" y="36" font-size="8" font-weight="700" fill="var(--text-secondary)">
+                        ${z.concept.split('&')[0].trim()}
+                      </text>
+
+                      <!-- Shortest Path Distance & Status -->
+                      <text x="8" y="54" font-size="8.5" font-weight="800" fill="#0284c7">
+                        ⚡ Shortest: ${z.mapCoords.shortestDist}
+                      </text>
+                      <text x="8" y="66" font-size="8" font-weight="700" fill="${statusTagColor}">
+                        ${statusTagText}
+                      </text>
+                    </g>
+
+                    <!-- Vertex Disc Anchor at (x, y) -->
+                    <g transform="translate(${x}, ${y})">
+                      <!-- Pulsing rings for current node -->
+                      ${isCurrent ? `
+                        <circle cx="0" cy="0" r="34" fill="none" stroke="#38bdf8" stroke-width="2" class="avatar-ripple" />
+                        <circle cx="0" cy="0" r="44" fill="none" stroke="#0284c7" stroke-width="1.5" class="avatar-ripple-delayed" />
+                      ` : ''}
+
+                      <!-- Node outer circle -->
+                      <circle cx="0" cy="0" r="24" fill="${discFill}" stroke="${discStroke}" stroke-width="2.5" class="vertex-circle" />
+
+                      <!-- Center Icon -->
+                      <text x="0" y="5" text-anchor="middle" font-size="14">${z.icon}</text>
+
+                      <!-- Small Vertex ID badge tag at corner -->
+                      <circle cx="16" cy="-16" r="9" fill="var(--bg-card)" stroke="${discStroke}" stroke-width="1.5" />
+                      <text x="16" y="-13" text-anchor="middle" font-size="8" font-weight="900" fill="var(--text-primary)">${z.id}</text>
+                    </g>
+                  </g>
+                `;
+              }).join('')}
+            </g>
+
+            <!-- 3. CURRENT LEARNER TRAVELER AVATAR PIN -->
             <g class="learner-traveler-avatar" transform="translate(${currentZone.mapCoords.x}, ${currentZone.mapCoords.y})">
-              <!-- Avatar Floating Badge -->
+              <!-- Elevated Pin Banner -->
               <g transform="translate(0, -56)">
-                <rect x="-60" y="-22" width="120" height="24" rx="6" fill="#f59e0b" stroke="#fff" stroke-width="2" filter="url(#neonGlow)" />
-                <text x="0" y="-6" text-anchor="middle" fill="#0b1120" font-size="11" font-weight="900">
+                <rect x="-55" y="-20" width="110" height="22" rx="5" fill="#f59e0b" stroke="#ffffff" stroke-width="1.8" filter="url(#neonGlow)" />
+                <text x="0" y="-5" text-anchor="middle" fill="#0f172a" font-size="9.5" font-weight="900">
                   📍 YOU ARE HERE
                 </text>
-                <polygon points="-6,2 6,2 0,8" fill="#f59e0b" />
+                <polygon points="-5,2 5,2 0,7" fill="#f59e0b" />
               </g>
 
               <!-- Learner Character Marker -->
-              <circle cx="0" cy="0" r="22" fill="#0f172a" stroke="#f59e0b" stroke-width="3" />
-              <text x="0" y="7" text-anchor="middle" font-size="18">${avatarIcon}</text>
+              <circle cx="0" cy="0" r="20" fill="#0f172a" stroke="#f59e0b" stroke-width="2.5" />
+              <text x="0" y="6" text-anchor="middle" font-size="16">${avatarIcon}</text>
             </g>
           </svg>
         </div>
