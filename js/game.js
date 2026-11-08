@@ -83,6 +83,7 @@ class GameController {
 
     // Map container
     this.mapContainer = document.getElementById('udaipur-map-container');
+    this.currentViewMode = 'map'; // 'map' or 'grid'
 
     // Zone Modal & Tabs
     this.zoneModal = document.getElementById('zone-modal');
@@ -378,25 +379,274 @@ class GameController {
   renderMap() {
     if (!this.mapContainer) return;
 
+    const currentZone = ZONES.find(z => z.id === gameState.currentZoneId) || ZONES[0];
+    const sourceZone = ZONES[0];
+    const finalDestZone = ZONES[ZONES.length - 1];
+    const totalConquered = gameState.badges.filter(b => b.id !== 'badge-welcome').length;
+    const progressPct = Math.min(100, Math.round((totalConquered / 10) * 100));
+    const avatarIcon = this.getAvatarForLevel(gameState.level);
+
     let html = `
-      <div class="map-world">
-        <!-- Royal Udaipur Map Header Layer -->
-        <div class="map-header-banner">
-          <div class="map-title-row">
-            <span class="royal-crest">🏰</span>
-            <div>
-              <h2 class="map-heading">ROYAL UDAIPUR DSA EXPEDITION</h2>
-              <p class="map-subheading">Select any unlocked landmark across Udaipur to explore algorithms, simulate logic, and conquer challenges.</p>
+      <div class="udaipur-expedition-wrapper">
+        <!-- Travel Telemetry Banner -->
+        <div class="expedition-hud-card">
+          <div class="hud-route-header">
+            <div class="route-waypoints">
+              <div class="waypoint-box source-waypoint">
+                <span class="waypoint-tag">SOURCE (START)</span>
+                <span class="waypoint-title">🎓 ${sourceZone.title}</span>
+                <span class="waypoint-concept">${sourceZone.concept}</span>
+              </div>
+              <div class="route-arrow-flow">
+                <span class="arrow-glyph">➔</span>
+                <span class="journey-distance">${progressPct}% EXPEDITION COMPLETED</span>
+                <span class="arrow-glyph">➔</span>
+              </div>
+              <div class="waypoint-box dest-waypoint">
+                <span class="waypoint-tag">FINAL DESTINATION</span>
+                <span class="waypoint-title">👑 ${finalDestZone.title}</span>
+                <span class="waypoint-concept">${finalDestZone.concept}</span>
+              </div>
+            </div>
+
+            <div class="hud-actions-group">
+              <div class="view-toggle-pills">
+                <button class="btn-view-toggle ${this.currentViewMode === 'map' ? 'active' : ''}" id="btn-toggle-map-view">
+                  🗺️ Udaipur Map
+                </button>
+                <button class="btn-view-toggle ${this.currentViewMode === 'grid' ? 'active' : ''}" id="btn-toggle-grid-view">
+                  📋 Grid View
+                </button>
+              </div>
+              <button class="btn-travel-now" id="btn-travel-current-zone">
+                🚀 Travel To Current Zone (${currentZone.id}: ${currentZone.title.split(',')[0]}) ➔
+              </button>
             </div>
           </div>
-          <div class="powered-by-kapil-badge">
-            <span>⚡ POWERED BY KAPIL</span>
-            <span>•</span>
-            <span>SPSU UDAIPUR</span>
+
+          <!-- Overall Journey Progress Track -->
+          <div class="expedition-progress-strip">
+            <div class="progress-labels">
+              <span>Origin: SPSU Bhatewar</span>
+              <span>Learner at: <strong>Zone ${currentZone.id} (${currentZone.title})</strong></span>
+              <span>Final Destination: SPSU Convocation</span>
+            </div>
+            <div class="expedition-track">
+              <div class="expedition-fill" style="width: ${Math.max(8, progressPct)}%;"></div>
+            </div>
           </div>
         </div>
+    `;
 
-        <div class="map-nodes-grid">
+    if (this.currentViewMode === 'map') {
+      html += this.renderInteractiveUdaipurMap(currentZone, avatarIcon);
+    } else {
+      html += this.renderGridView();
+    }
+
+    html += `</div>`;
+
+    this.mapContainer.innerHTML = html;
+
+    // Bind map/view buttons
+    const btnMap = document.getElementById('btn-toggle-map-view');
+    const btnGrid = document.getElementById('btn-toggle-grid-view');
+    const btnTravel = document.getElementById('btn-travel-current-zone');
+
+    if (btnMap) {
+      btnMap.addEventListener('click', () => {
+        sound.playClick();
+        this.currentViewMode = 'map';
+        this.renderMap();
+      });
+    }
+    if (btnGrid) {
+      btnGrid.addEventListener('click', () => {
+        sound.playClick();
+        this.currentViewMode = 'grid';
+        this.renderMap();
+      });
+    }
+    if (btnTravel) {
+      btnTravel.addEventListener('click', () => {
+        sound.playClick();
+        this.openZoneModal(gameState.currentZoneId);
+      });
+    }
+
+    // Attach click events on landmark nodes and pins
+    this.mapContainer.querySelectorAll('[data-zone-id]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        const zoneId = parseInt(el.dataset.zoneId, 10);
+        if (zoneId) {
+          this.handleNodeClick(zoneId);
+        }
+      });
+    });
+  }
+
+  renderInteractiveUdaipurMap(currentZone, avatarIcon) {
+    // Generate route path points through zones 1 to 10
+    const points = ZONES.map(z => `${z.mapCoords.x},${z.mapCoords.y}`).join(' ');
+
+    return `
+      <div class="udaipur-interactive-map-frame">
+        <div class="map-legend-bar">
+          <div class="legend-item"><span class="legend-dot dot-source"></span> Source (SPSU)</div>
+          <div class="legend-item"><span class="legend-dot dot-conquered"></span> Conquered (⭐)</div>
+          <div class="legend-item"><span class="legend-dot dot-current"></span> Current Location (📍)</div>
+          <div class="legend-item"><span class="legend-dot dot-locked"></span> Locked Landmark (🔒)</div>
+          <div class="legend-item"><span class="legend-dot dot-dest"></span> Final Destination (👑)</div>
+          <div class="map-hint">💡 Click any unlocked location pin on the map to travel and begin challenges!</div>
+        </div>
+
+        <div class="svg-map-wrapper">
+          <svg viewBox="0 0 1200 700" class="udaipur-vector-map" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0284c7" stop-opacity="0.75" />
+                <stop offset="50%" stop-color="#06b6d4" stop-opacity="0.85" />
+                <stop offset="100%" stop-color="#0369a1" stop-opacity="0.9" />
+              </linearGradient>
+              <linearGradient id="hillGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#1e293b" stop-opacity="0.8" />
+                <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9" />
+              </linearGradient>
+              <linearGradient id="routeConquered" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f59e0b" />
+                <stop offset="100%" stop-color="#10b981" />
+              </linearGradient>
+              <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            <!-- Map Background Terrain: Mewar & Aravalli Valleys -->
+            <rect width="1200" height="700" fill="var(--bg-main)" />
+
+            <!-- Stylized Topographic Elevation Lines (Aravalli Range) -->
+            <path d="M 0,180 Q 200,80 350,140 T 700,90 T 1000,160 T 1200,110" fill="none" stroke="var(--border-color)" stroke-width="2" stroke-dasharray="4,6" opacity="0.4" />
+            <path d="M 0,320 Q 180,240 380,290 T 800,240 T 1200,280" fill="none" stroke="var(--border-color)" stroke-width="2" stroke-dasharray="4,6" opacity="0.3" />
+            <path d="M 0,540 Q 240,480 460,530 T 900,480 T 1200,520" fill="none" stroke="var(--border-color)" stroke-width="2" stroke-dasharray="4,6" opacity="0.4" />
+
+            <!-- Aravalli Hills Shaded Silhouettes (West & Northwest) -->
+            <!-- Bansdara / Sajjangarh Hill -->
+            <polygon points="120,400 230,220 340,400" fill="url(#hillGrad)" stroke="var(--border-color)" stroke-width="1.5" />
+            <text x="230" y="210" fill="#94a3b8" font-size="11" font-weight="700" text-anchor="middle">Bansdara Peak (938m)</text>
+
+            <!-- Kumbhalgarh High Ridge (Northwest) -->
+            <polygon points="60,250 175,70 300,250" fill="url(#hillGrad)" stroke="var(--border-color)" stroke-width="1.5" />
+            <text x="175" y="60" fill="#f59e0b" font-size="11" font-weight="800" text-anchor="middle">Kumbhalgarh Ridge (1,100m)</text>
+
+            <!-- Water Bodies of Udaipur -->
+            <!-- 1. Fateh Sagar Lake -->
+            <ellipse cx="440" cy="260" rx="95" ry="60" fill="url(#waterGrad)" stroke="#38bdf8" stroke-width="2" />
+            <!-- Nehru Park Island in Fateh Sagar -->
+            <ellipse cx="440" cy="260" rx="20" ry="12" fill="#15803d" stroke="#fef08a" stroke-width="1" />
+            <text x="440" y="240" fill="#e0f2fe" font-size="12" font-weight="800" text-anchor="middle" filter="url(#neonGlow)">Fateh Sagar Lake</text>
+            <text x="440" y="264" fill="#ffffff" font-size="9" font-weight="700" text-anchor="middle">Nehru Park</text>
+
+            <!-- 2. Lake Pichola -->
+            <path d="M 400,430 C 420,380 560,390 580,440 C 600,520 540,590 470,580 C 410,570 380,480 400,430 Z" fill="url(#waterGrad)" stroke="#38bdf8" stroke-width="2" />
+            <!-- Jag Mandir Island inside Pichola -->
+            <ellipse cx="450" cy="530" rx="26" ry="16" fill="#ca8a04" stroke="#fef08a" stroke-width="1.5" />
+            <text x="510" y="470" fill="#e0f2fe" font-size="13" font-weight="800" text-anchor="middle" filter="url(#neonGlow)">Lake Pichola</text>
+            <text x="450" y="534" fill="#0b1120" font-size="8.5" font-weight="900" text-anchor="middle">Jag Mandir</text>
+
+            <!-- Connecting Swaroop Sagar Canal -->
+            <path d="M 460,320 Q 480,360 475,395" fill="none" stroke="#38bdf8" stroke-width="8" stroke-linecap="round" opacity="0.8" />
+            <text x="495" y="360" fill="#38bdf8" font-size="9" font-weight="700">Swaroop Sagar</text>
+
+            <!-- Connecting Highway from SPSU Bhatewar (NH-76) -->
+            <path d="M 960,560 Q 750,520 590,495" fill="none" stroke="#64748b" stroke-width="4" stroke-dasharray="6,6" opacity="0.5" />
+            <text x="800" y="535" fill="#94a3b8" font-size="10" font-weight="600" text-anchor="middle">NH-76 (Udaipur - Chittorgarh Hwy)</text>
+
+            <!-- The Royal DSA Expedition Trajectory (Winding Path Through All 10 Landmarks) -->
+            <!-- Base Road Track -->
+            <polyline points="${points}" fill="none" stroke="var(--border-color)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" />
+            <!-- Active Pathway Glowing Animation -->
+            <polyline points="${points}" fill="none" stroke="url(#routeConquered)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10,8" class="animated-route-line" />
+
+            <!-- Landmark Location Points / Pins -->
+            ${ZONES.map(z => {
+              const isSource = z.id === 1;
+              const isFinal = z.id === 10;
+              const isUnlocked = gameState.isZoneUnlocked(z.id);
+              const isConquered = gameState.hasBadge(z.badge.id);
+              const isCurrent = currentZone.id === z.id;
+
+              let pinColor = '#475569'; // locked
+              let strokeColor = '#64748b';
+              if (isConquered) {
+                pinColor = '#f59e0b';
+                strokeColor = '#fbbf24';
+              } else if (isCurrent) {
+                pinColor = '#06b6d4';
+                strokeColor = '#38bdf8';
+              } else if (isUnlocked) {
+                pinColor = '#10b981';
+                strokeColor = '#34d399';
+              }
+
+              return `
+                <!-- Landmark Pin for Zone ${z.id} -->
+                <g class="map-landmark-group ${isCurrent ? 'current-pin-group' : ''} ${!isUnlocked ? 'locked-pin-group' : ''}" data-zone-id="${z.id}" transform="translate(${z.mapCoords.x}, ${z.mapCoords.y})">
+                  <!-- Pulse Ripple for Current Pin -->
+                  ${isCurrent ? `
+                    <circle cx="0" cy="0" r="28" fill="none" stroke="#38bdf8" stroke-width="2" class="avatar-ripple" />
+                    <circle cx="0" cy="0" r="38" fill="none" stroke="#f59e0b" stroke-width="1.5" class="avatar-ripple-delayed" />
+                  ` : ''}
+
+                  <!-- Outer Pin Disc -->
+                  <circle cx="0" cy="0" r="18" fill="${pinColor}" stroke="${strokeColor}" stroke-width="2.5" class="pin-disc" />
+
+                  <!-- Pin Icon -->
+                  <text x="0" y="5" text-anchor="middle" font-size="14">${z.icon}</text>
+
+                  <!-- Landmark Tag / Label Banner -->
+                  <g transform="translate(0, -26)">
+                    <rect x="-85" y="-18" width="170" height="20" rx="4" fill="var(--bg-card)" stroke="${strokeColor}" stroke-width="1.2" />
+                    <text x="0" y="-4" text-anchor="middle" fill="var(--text-primary)" font-size="10" font-weight="800">
+                      ${isSource ? '🏁 1. SOURCE: SPSU' : isFinal ? '👑 10. FINAL DESTINATION' : `${z.id}. ${z.title.split(',')[0]}`}
+                    </text>
+                  </g>
+
+                  <!-- Concept Pill below -->
+                  <g transform="translate(0, 24)">
+                    <rect x="-65" y="0" width="130" height="15" rx="3" fill="var(--bg-card-subtle)" stroke="var(--border-color)" stroke-width="1" />
+                    <text x="0" y="11" text-anchor="middle" fill="var(--gold-primary)" font-size="8.5" font-weight="700">
+                      ${z.concept.split('&')[0].trim()}
+                    </text>
+                  </g>
+                </g>
+              `;
+            }).join('')}
+
+            <!-- Animated Learner Avatar at Current Position -->
+            <g class="learner-traveler-avatar" transform="translate(${currentZone.mapCoords.x}, ${currentZone.mapCoords.y})">
+              <!-- Avatar Floating Badge -->
+              <g transform="translate(0, -56)">
+                <rect x="-60" y="-22" width="120" height="24" rx="6" fill="#f59e0b" stroke="#fff" stroke-width="2" filter="url(#neonGlow)" />
+                <text x="0" y="-6" text-anchor="middle" fill="#0b1120" font-size="11" font-weight="900">
+                  📍 YOU ARE HERE
+                </text>
+                <polygon points="-6,2 6,2 0,8" fill="#f59e0b" />
+              </g>
+
+              <!-- Learner Character Marker -->
+              <circle cx="0" cy="0" r="22" fill="#0f172a" stroke="#f59e0b" stroke-width="3" />
+              <text x="0" y="7" text-anchor="middle" font-size="18">${avatarIcon}</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    `;
+  }
+
+  renderGridView() {
+    let html = `
+      <div class="map-nodes-grid">
     `;
 
     ZONES.forEach(zone => {
@@ -417,7 +667,7 @@ class GameController {
       html += `
         <div class="map-node-card ${statusCls} ${isCurrent ? 'current-pulse' : ''}" data-zone-id="${zone.id}">
           <div class="node-card-header">
-            <span class="node-number">Zone ${zone.id}</span>
+            <span class="node-number">Zone ${zone.id} • ${zone.id === 1 ? 'SOURCE' : zone.id === 10 ? 'DESTINATION' : 'WAYPOINT'}</span>
             <span class="node-status-tag ${statusCls}">${statusLabel}</span>
           </div>
           <div class="node-icon-row">
@@ -438,22 +688,8 @@ class GameController {
       `;
     });
 
-    html += `
-        </div>
-      </div>
-    `;
-
-    this.mapContainer.innerHTML = html;
-
-    // Attach click events
-    this.mapContainer.querySelectorAll('.btn-node-action, .map-node-card').forEach(el => {
-      el.addEventListener('click', (e) => {
-        const zoneId = parseInt(el.dataset.zoneId || el.closest('.map-node-card')?.dataset.zoneId, 10);
-        if (zoneId) {
-          this.handleNodeClick(zoneId);
-        }
-      });
-    });
+    html += `</div>`;
+    return html;
   }
 
   handleNodeClick(zoneId) {

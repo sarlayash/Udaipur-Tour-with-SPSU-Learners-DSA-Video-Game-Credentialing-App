@@ -10,6 +10,7 @@ export const ZONES = [
     landmark: 'Sir Padampat Singhania University Turing Quad',
     lore: 'Nestled in the tranquil Aravalli valley of Udaipur, the journey begins at SPSU. Just as students occupy sequential dormitory rooms in Hall 1, primitive arrays occupy contiguous blocks in physical RAM.',
     concept: 'Arrays & Two-Pointer Logic',
+    mapCoords: { x: 960, y: 560, region: 'East Mewar Valley' },
     color: '#3b82f6',
     icon: '🎓',
     badge: {
@@ -107,6 +108,7 @@ function findPair(arr, target) {
     landmark: 'Fateh Sagar Paal & Nehru Park Island',
     lore: 'Watching royal Shikara boats chained along Fateh Sagar\'s shores, you realize each boat holds a rope tied only to the next. That is the essence of a Linked List—dynamic, non-contiguous nodes floating on the water connected by pointers.',
     concept: 'Singly, Doubly Linked Lists & Fast-Slow Pointers',
+    mapCoords: { x: 440, y: 260, region: 'Fateh Sagar Basin' },
     color: '#06b6d4',
     icon: '⛵',
     badge: {
@@ -200,6 +202,7 @@ function reverseList(head) {
     landmark: 'Tripolia Gate & Zenana Mahal',
     lore: 'At the magnificent City Palace towering over Lake Pichola, guests entering through Tripolia Gate form an orderly FIFO Queue. Inside the Royal Treasury, ceremonial silver plates are stacked LIFO—the last placed on top is the first picked by the Maharana.',
     concept: 'Stacks (LIFO) & Queues (FIFO)',
+    mapCoords: { x: 530, y: 410, region: 'City Palace Complex' },
     color: '#eab308',
     icon: '👑',
     badge: {
@@ -307,6 +310,7 @@ function isValid(s) {
     landmark: 'Fountain Courtyard & Marble Elephants',
     lore: 'Built by Maharana Sangram Singh for the 48 maidens, the fountains operate purely on natural hydraulic gravity without pumps. Each marble stream branches into smaller channels, exactly as a recursive function decomposes large tasks into identical sub-problems, backtracking when a branch runs dry.',
     concept: 'Recursion, Call Trees & N-Queens Backtracking',
+    mapCoords: { x: 490, y: 175, region: 'Royal Gardens' },
     color: '#ec4899',
     icon: '🌸',
     badge: {
@@ -430,6 +434,7 @@ function solveNQueens(n) {
     landmark: 'Gul Mahal & Lake Pichola Marble Domes',
     lore: 'Isolated on an island in Lake Pichola, Jag Mandir served as a secure haven for Prince Khurram (later Emperor Shah Jahan). Just as the palace partitions royal treasures into orderly vaults, Divide and Conquer algorithms partition large arrays into halves, achieving optimal O(n log n) sorting.',
     concept: 'Binary Search, Merge Sort & Quick Sort',
+    mapCoords: { x: 450, y: 530, region: 'Pichola Island' },
     color: '#8b5cf6',
     icon: '🏝️',
     badge: {
@@ -536,6 +541,7 @@ function binarySearch(arr, target) {
     landmark: 'Monsoon Palace Citadel over Fateh Sagar',
     lore: 'Perched high atop Bansdara hill, Sajjangarh offers a 360-degree panoramic vantage point of Udaipur\'s lakes and valleys. Like branches extending outward and downward from the royal roof, a Tree data structure branches from a singular Root down to leaves, preserving hierarchical order.',
     concept: 'Binary Trees, BSTs & Tree Traversals',
+    mapCoords: { x: 230, y: 310, region: 'Bansdara Ridge' },
     color: '#10b981',
     icon: '⛰️',
     badge: {
@@ -638,6 +644,7 @@ function levelOrder(root) {
     landmark: 'Haveli Puppet Museum & Gangaur Ghat Steps',
     lore: 'Famous for the traditional Rajasthani Dharohar folk dances and intricate puppet museum, Bagore Ki Haveli organizes thousands of artisan marionettes. Finding any puppet instantly requires a royal catalog index—a Hash Table. Prioritizing performance acts uses a Priority Queue (Heap).',
     concept: 'Hash Maps, Collision Resolution & Binary Heaps',
+    mapCoords: { x: 505, y: 355, region: 'Gangaur Ghat Waterfront' },
     color: '#f97316',
     icon: '🎭',
     badge: {
@@ -730,6 +737,7 @@ function twoSum(nums, target) {
     landmark: 'Karni Mata Ropeway & Pichola Ghats',
     lore: 'From Dudh Talai to Karni Mata Temple, the aerial ropeway connects ghats, islands, and hilltops across Lake Pichola. These interconnected junctions form a weighted Graph, where finding the safest and shortest route between monuments requires Dijkstra\'s and Breadth-First Search algorithms.',
     concept: 'Graph Modeling, Traversals (BFS, DFS) & Shortest Paths',
+    mapCoords: { x: 590, y: 495, region: 'Dudh Talai & Ropeway' },
     color: '#0284c7',
     icon: '🚠',
     badge: {
@@ -858,6 +866,7 @@ function bfs(graph, startNode) {
     landmark: 'Badal Mahal & 36-Kilometer Wall of Kumbhalgarh',
     lore: 'With its 36-kilometer continuous wall second only to the Great Wall of China, Kumbhalgarh was invincible. Its architects never recalculated fortifications from scratch; they preserved sub-structure reinforcements in royal architectural tablets—the absolute paradigm of Dynamic Programming memoization.',
     concept: 'Dynamic Programming & Greedy Optimization',
+    mapCoords: { x: 175, y: 130, region: 'Kumbhalgarh Aravalli Wall' },
     color: '#d97706',
     icon: '🛡️',
     badge: {
@@ -958,6 +967,7 @@ function climbStairs(n) {
     landmark: 'Sir Padampat Singhania University Auditorium',
     lore: 'Having journeyed across every royal palace, tranquil lake, and fortressed mountain peak of Udaipur, learners assemble at the SPSU Grand Convocation Hall. Here, all DSA paradigms unite for the final evaluation to claim the prestigious, high-resolution verifiable SPSU DSA Certificate!',
     concept: 'Comprehensive Algorithm Synthesis & Architectural Mastery',
+    mapCoords: { x: 1040, y: 460, region: 'SPSU Convocation Citadel' },
     color: '#854d0e',
     icon: '👑',
     badge: {
