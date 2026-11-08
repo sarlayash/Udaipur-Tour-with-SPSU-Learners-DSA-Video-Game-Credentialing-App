@@ -404,7 +404,7 @@ class GameController {
             <div class="route-waypoints">
               <div class="waypoint-box source-waypoint">
                 <span class="waypoint-tag">SOURCE (START)</span>
-                <span class="waypoint-title">🎓 ${sourceZone.title}</span>
+                <span class="waypoint-title"><img src="assets/spsu-logo.png" alt="SPSU" class="hud-spsu-logo" /> 🎓 ${sourceZone.title}</span>
                 <span class="waypoint-concept">${sourceZone.concept}</span>
               </div>
               <div class="route-arrow-flow">
@@ -414,7 +414,7 @@ class GameController {
               </div>
               <div class="waypoint-box dest-waypoint">
                 <span class="waypoint-tag">FINAL DESTINATION</span>
-                <span class="waypoint-title">👑 ${finalDestZone.title}</span>
+                <span class="waypoint-title"><img src="assets/spsu-logo.png" alt="SPSU" class="hud-spsu-logo" /> 👑 ${finalDestZone.title}</span>
                 <span class="waypoint-concept">${finalDestZone.concept}</span>
               </div>
             </div>

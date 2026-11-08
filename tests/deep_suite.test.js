@@ -314,6 +314,15 @@ it('Page and all modals contain official SPSU copyright and Powered By Kapil att
   assert.ok(modalFooters && modalFooters.length >= 4, 'All 4 modals must contain bottom copyright footers');
 });
 
+// 10. Official SPSU Brand Assets
+console.log('\n--- 10. OFFICIAL SPSU BRAND ASSETS ---');
+it('Official SPSU logo asset exists and is rendered on landing page', () => {
+  assert.ok(fs.existsSync(path.join(ROOT, 'assets/spsu-logo.png')), 'assets/spsu-logo.png must exist');
+  assert.ok(htmlContent.includes('src="assets/spsu-logo.png"'), 'Logo must be referenced in index.html');
+  assert.ok(htmlContent.includes('class="brand-logo-img"'), 'Navbar must contain brand logo image');
+  assert.ok(htmlContent.includes('class="onboarding-spsu-logo"'), 'Onboarding modal must contain SPSU logo');
+});
+
 console.log('\n======================================================');
 console.log(`📊 TEST RESULTS: ${passed} PASSED | ${failed} FAILED`);
 console.log('======================================================\n');
